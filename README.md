@@ -25,3 +25,5 @@ Assign library card number to user
 Status of book: Checked in/ Checked out
 Amount of books the library has
 Condition of book: new, good, fair, poor
+
+*UML diagrams are in the Diagrams branch*
