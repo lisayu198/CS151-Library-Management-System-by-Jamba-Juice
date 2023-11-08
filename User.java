@@ -73,6 +73,7 @@ public class User {
         }
     }
 
+    // getter and setter for phoneNum
     public int getPhoneNum() {
         return phoneNum;
     }
