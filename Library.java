@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,16 +14,24 @@ public class Library {
     String bookFile = "booklist.txt";
     JFrame libraryFrame = new JFrame("library frame");
     JPanel libraryPanel = new JPanel(new GridBagLayout());
-    JButton addBook = new JButton();
+    JButton addBook = new JButton("clicketh me to addeth thyst books");
     JButton removeBook = new JButton();
+    ImageIcon userIcon = new ImageIcon("C:\\Users\\anisp\\Downloads\\FreddyFazbear_2__54364.jpg");
+
+    Image scale = userIcon.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH);
+    ImageIcon updatedIcon = new ImageIcon(scale);
+    JButton userAccount = new JButton(updatedIcon);
     JLabel titleLabel = new JLabel("list of available bookies");
-    JTextArea availableBooks = new JTextArea();
+    JList<String> bookString;
     public Library(){
         SwingUtilities.invokeLater(() -> {
+            LibraryUI();
             readBookListFromFile();
             updateBookList();
         });
 
+    }
+    public void LibraryUI(){
         bookList = readBookListFromFile();
 
         libraryPanel.setBackground(Color.decode("#fec7d7"));
@@ -40,11 +49,15 @@ public class Library {
         GridBagConstraints textConstraints = new GridBagConstraints();
         textConstraints.gridx = 0;
         textConstraints.gridy = 0;
-        textConstraints.insets = new Insets(10,10,10,10);
+        textConstraints.insets = new Insets(10,60,10,10);
         textConstraints.fill = GridBagConstraints.HORIZONTAL;
-        textConstraints.gridwidth = 2;
+        textConstraints.gridwidth = 5;
         libraryPanel.add(titleLabel, textConstraints);
 
+        bookString = new JList<>();
+        bookString.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        bookString.setLayoutOrientation(JList.VERTICAL);
+        bookString.setVisibleRowCount(10);
         /**
          * constraints for the list of books
          * setEditable is false so prof can't edit the available books
@@ -58,17 +71,36 @@ public class Library {
         bookConstraints.insets = new Insets(10,10,10,10);
         bookConstraints.fill = GridBagConstraints.BOTH;
         bookConstraints.gridwidth = 8;
-        availableBooks.setEditable(false);
-        availableBooks.setLineWrap(true);
-        libraryPanel.add(new JScrollPane(availableBooks), bookConstraints);
+        libraryPanel.add(new JScrollPane(bookString), bookConstraints);
         updateBookList(); //prints here
+
+        GridBagConstraints addBookConstraints = new GridBagConstraints();
+        addBookConstraints.gridx = 0;
+        addBookConstraints.gridy = 2;
+        addBookConstraints.insets = new Insets(10,10,10,10);
+        addBookConstraints.fill = GridBagConstraints.BOTH;
+        addBookConstraints.gridwidth = 2;
+        libraryPanel.add(addBook, addBookConstraints);
+
+        GridBagConstraints iconConstraints = new GridBagConstraints();
+        iconConstraints.gridx = GridBagConstraints.RELATIVE;
+        iconConstraints.gridy = 0;
+        iconConstraints.anchor = GridBagConstraints.NORTHEAST;
+        iconConstraints.insets = new Insets(10, 10, 10, 10);
+        userAccount.setPreferredSize(new Dimension(30,30));
+        libraryPanel.add(userAccount, iconConstraints);
 
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setForeground(Color.decode("#0e172c"));
+        
+        userAccount.addActionListener(this::actionPerformed);
+        addBook.addActionListener(this::actionPerformed);
+    }
 
-
+    private void actionPerformed(ActionEvent buttonClicked) {
 
     }
+
     //comment
     /*private void addUser(User user){
 
@@ -98,29 +130,27 @@ public class Library {
      * PS: IT SOMETIMES DOESNT PRINT IDK WHY IM FIGURING THAT OUT
      */
     private List<String> readBookListFromFile() {
-        List<String> list = new ArrayList<>();
+        bookList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(bookFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                list.add(line);
+                bookList.add(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             JOptionPane.showMessageDialog(libraryFrame, "debuggy there seems to be an error :( " + e.getMessage(),
                     "whomp", JOptionPane.ERROR_MESSAGE);
         }
-        return list;
+        return bookList;
     }
 
     /**
      * updates the list of books and prints it to the application
      */
     private void updateBookList() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String book : bookList) {
-            stringBuilder.append(book).append("\n");
-        }
-        availableBooks.setText(stringBuilder.toString());
+        SwingUtilities.invokeLater(() -> {
+            bookString.setListData(bookList.toArray(new String[0]));
+        });
     }
 
 }
