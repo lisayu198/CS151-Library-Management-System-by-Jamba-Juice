@@ -1,3 +1,5 @@
+package libraryPackage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,10 +16,8 @@ public class Library {
     String bookFile = "booklist.txt";
     JFrame libraryFrame = new JFrame("library frame");
     JPanel libraryPanel = new JPanel(new GridBagLayout());
-    JButton addBook = new JButton("clicketh me to addeth thyst books");
-    JButton removeBook = new JButton();
+    JButton removeBook = new JButton("clicketh me to removeth thyst books");
     ImageIcon userIcon = new ImageIcon("C:\\Users\\anisp\\Downloads\\FreddyFazbear_2__54364.jpg");
-
     Image scale = userIcon.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH);
     ImageIcon updatedIcon = new ImageIcon(scale);
     JButton userAccount = new JButton(updatedIcon);
@@ -80,7 +80,7 @@ public class Library {
         addBookConstraints.insets = new Insets(10,10,10,10);
         addBookConstraints.fill = GridBagConstraints.BOTH;
         addBookConstraints.gridwidth = 2;
-        libraryPanel.add(addBook, addBookConstraints);
+        libraryPanel.add(removeBook, addBookConstraints);
 
         GridBagConstraints iconConstraints = new GridBagConstraints();
         iconConstraints.gridx = GridBagConstraints.RELATIVE;
@@ -94,11 +94,16 @@ public class Library {
         titleLabel.setForeground(Color.decode("#0e172c"));
         
         userAccount.addActionListener(this::actionPerformed);
-        addBook.addActionListener(this::actionPerformed);
+        removeBook.addActionListener(this::actionPerformed);
     }
 
     private void actionPerformed(ActionEvent buttonClicked) {
+        String selectedBook = bookString.getSelectedValue();
 
+        if(selectedBook != null){
+            bookList.remove(selectedBook);
+            updateBookList();
+        }
     }
 
     //comment
