@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 book
 book
 book
@@ -11,3 +12,18 @@ book
 book
 book
 
+=======
+book
+book
+book
+book
+book
+super long book like insanely long 
+book
+book
+book
+book
+book
+book
+
+>>>>>>> origin/jess-branch
