@@ -3,9 +3,7 @@ package libraryPackage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Hashtable;
 import java.util.*;
 import java.util.List;
@@ -15,14 +13,23 @@ public class Library {
     private List<String> bookList;
     String bookFile = "booklist.txt";
     JFrame libraryFrame = new JFrame("library frame");
-    JPanel libraryPanel = new JPanel(new GridBagLayout());
-    JButton removeBook = new JButton("clicketh me to removeth thyst books");
+    JPanel panel = new JPanel(new GridLayout(1, 2));
+    JButton removeBook = new JButton("removeth thyst books");
     ImageIcon userIcon = new ImageIcon("C:\\Users\\anisp\\Downloads\\FreddyFazbear_2__54364.jpg");
     Image scale = userIcon.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH);
     ImageIcon updatedIcon = new ImageIcon(scale);
     JButton userAccount = new JButton(updatedIcon);
     JLabel titleLabel = new JLabel("list of available bookies");
     JList<String> bookString;
+
+    JLabel descriptionLabel = new JLabel("pls enter bok info ty");
+    JTextField bookInput = new JTextField(20);
+    JTextField authorInput = new JTextField(20);
+    JTextField isbnInput = new JTextField(20);
+    JLabel bookLabel = new JLabel("book title?");
+    JLabel authorLabel = new JLabel("author?");
+    JLabel isbnLabel = new JLabel("isbn?");
+    JButton addBook = new JButton("addeth thyst books");
     public Library(){
         SwingUtilities.invokeLater(() -> {
             LibraryUI();
@@ -34,12 +41,26 @@ public class Library {
     public void LibraryUI(){
         bookList = readBookListFromFile();
 
-        libraryPanel.setBackground(Color.decode("#fec7d7"));
-        libraryFrame.add(libraryPanel);
-        libraryFrame.setSize(700,500);
+        libraryFrame.add(panel);
+        libraryFrame.setSize(800,500);
         libraryFrame.setVisible(true);
-        libraryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        libraryFrame.setLocationRelativeTo(null);
+        libraryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        panel.add(createLibraryPanel());
+        panel.add(createBookPanel());
+
+        userAccount.addActionListener(this::actionPerformed);
+        removeBook.addActionListener(this::actionPerformed);
+        addBook.addActionListener(this::addBookAction);
+    }
+
+    /**
+     * creates the library panel (left)
+     */
+    private JPanel createLibraryPanel(){
+        JPanel libraryPanel = new JPanel(new GridBagLayout());
+        libraryPanel.setBackground(Color.decode("#fec7d7"));
         /**
          * this is constraints for the header
          * insets is basically like a spacer/margins
@@ -54,6 +75,9 @@ public class Library {
         textConstraints.gridwidth = 5;
         libraryPanel.add(titleLabel, textConstraints);
 
+        /**
+         * working JList for the books
+         */
         bookString = new JList<>();
         bookString.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         bookString.setLayoutOrientation(JList.VERTICAL);
@@ -65,23 +89,31 @@ public class Library {
          * look like this (I hope)
          * JScrollPane so if there's a lot of books we can scroll up and down the little text area
          */
-        GridBagConstraints bookConstraints = new GridBagConstraints();
-        bookConstraints.gridx = 0;
-        bookConstraints.gridy = 1;
-        bookConstraints.insets = new Insets(10,10,10,10);
-        bookConstraints.fill = GridBagConstraints.BOTH;
-        bookConstraints.gridwidth = 8;
-        libraryPanel.add(new JScrollPane(bookString), bookConstraints);
+        GridBagConstraints listConstraints = new GridBagConstraints();
+        listConstraints.gridx = 0;
+        listConstraints.gridy = 1;
+        listConstraints.insets = new Insets(10,10,10,10);
+        listConstraints.fill = GridBagConstraints.BOTH;
+        listConstraints.gridwidth = 8;
+        libraryPanel.add(new JScrollPane(bookString), listConstraints);
         updateBookList(); //prints here
 
-        GridBagConstraints addBookConstraints = new GridBagConstraints();
-        addBookConstraints.gridx = 0;
-        addBookConstraints.gridy = 2;
-        addBookConstraints.insets = new Insets(10,10,10,10);
-        addBookConstraints.fill = GridBagConstraints.BOTH;
-        addBookConstraints.gridwidth = 2;
-        libraryPanel.add(removeBook, addBookConstraints);
+        /**
+         * constraints for the remove button
+         */
+        GridBagConstraints bookButtonConstraints = new GridBagConstraints();
+        bookButtonConstraints.gridx = GridBagConstraints.RELATIVE;
+        bookButtonConstraints.gridy = 2;
+        bookButtonConstraints.insets = new Insets(10,10,10,10);
+        bookButtonConstraints.fill = GridBagConstraints.EAST;
+        bookButtonConstraints.gridwidth = 2;
+        libraryPanel.add(addBook, bookButtonConstraints);
+        bookButtonConstraints.gridx = GridBagConstraints.RELATIVE;
+        libraryPanel.add(removeBook, bookButtonConstraints);
 
+        /**
+         * constraints for feeby (might remove, is useless)
+         */
         GridBagConstraints iconConstraints = new GridBagConstraints();
         iconConstraints.gridx = GridBagConstraints.RELATIVE;
         iconConstraints.gridy = 0;
@@ -92,11 +124,77 @@ public class Library {
 
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setForeground(Color.decode("#0e172c"));
-        
-        userAccount.addActionListener(this::actionPerformed);
-        removeBook.addActionListener(this::actionPerformed);
+
+        return libraryPanel;
     }
 
+    /**
+     * creates panel for adding books to the list (right)
+     */
+    private JPanel createBookPanel(){
+        JPanel bookPanel = new JPanel(new GridBagLayout());
+
+        /**
+         * constraints for everything
+         */
+        GridBagConstraints bookConstraints = new GridBagConstraints();
+        bookConstraints.insets = new Insets(10,10,10,10);
+        bookPanel.setBackground(Color.decode("#fec7d7"));
+        bookLabel.setLabelFor(bookInput);
+        authorLabel.setLabelFor(authorInput);
+        isbnLabel.setLabelFor(isbnInput);
+
+        bookConstraints.gridx = 0;
+        bookConstraints.gridy = 0;
+        bookConstraints.gridwidth = 2;
+        bookConstraints.anchor = GridBagConstraints.CENTER;
+        bookPanel.add(descriptionLabel, bookConstraints);
+
+        /**
+         * adding the book title label and input
+         */
+        bookConstraints.gridx = 0;
+        bookConstraints.gridy = 1;
+        bookConstraints.gridwidth = 1;
+        bookPanel.add(bookLabel, bookConstraints);
+        bookConstraints.gridy = 2;
+        bookConstraints.fill = GridBagConstraints.HORIZONTAL;
+        bookConstraints.weightx = 1.0;
+        bookPanel.add(bookInput, bookConstraints);
+
+        /**
+         * adding author label and input
+         */
+        bookConstraints.gridx = 1;
+        bookConstraints.gridy = 1;
+        bookPanel.add(authorLabel, bookConstraints);
+        bookConstraints.gridy = 2;
+        bookPanel.add(authorInput, bookConstraints);
+
+        /**
+         * adding isbn label and input
+         */
+        bookConstraints.gridx = 0;
+        bookConstraints.gridy = 3;
+        bookPanel.add(isbnLabel, bookConstraints);
+        bookConstraints.gridy = 4;
+        bookPanel.add(isbnInput, bookConstraints);
+
+        /**
+         * adding add book button
+         */
+        bookConstraints.gridx = 1;
+        bookConstraints.gridy = 4;
+        addBook.setPreferredSize(new Dimension(5,30));
+        bookPanel.add(addBook, bookConstraints);
+
+        return bookPanel;
+    }
+
+    /**
+     * method for library panel
+     * removes selected book from the JList
+     */
     private void actionPerformed(ActionEvent buttonClicked) {
         String selectedBook = bookString.getSelectedValue();
 
@@ -106,33 +204,42 @@ public class Library {
         }
     }
 
-    //comment
-    /*private void addUser(User user){
+    /**
+     * method for book panel
+     * adds a book to JList
+     */
+    private void addBookAction(ActionEvent buttonClicked){
+        String bookTitle = bookInput.getText();
+        String authorName = authorInput.getText();
+        String isbn = isbnInput.getText();
 
+        if(!bookTitle.isEmpty() && !authorName.isEmpty() && !isbn.isEmpty()){
+            String newBook = bookTitle + " " + authorName + " " + isbn;
+            bookList.add(newBook);
+
+            updateBookListFile();
+            updateBookList();
+        }
     }
-    private void addBook(Book book){
 
-    }*/
-    private void removeBook(){
-
-    }
-    /*private void removeUser(User user){
-
-    }*/
-    private void searchBook(String title){
-
-    }
-    private void checkOutBook(String book){
-
-    }
-    private void returnBook(String book){
-
+    /**
+     * updates the booklist text file with newly added books
+     */
+    private void updateBookListFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(bookFile))) {
+            for (String book : bookList) {
+                writer.write(book);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(libraryFrame, "man something went wrong :(" + e.getMessage(),
+                    "eeeeeeee", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /** booklist.txt is a temp file so I can test to see if it prints. will replace will nelly's book list
      * basically reads the books on the file to be used by the update method below
      *
-     * PS: IT SOMETIMES DOESNT PRINT IDK WHY IM FIGURING THAT OUT
      */
     private List<String> readBookListFromFile() {
         bookList = new ArrayList<>();
