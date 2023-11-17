@@ -78,7 +78,7 @@ public class LoginFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String libraryCardNum = libraryCardNumField.getText();
-        String password = passwordField.getText();
+        String password = new String(passwordField.getPassword());
 
         // librarian login
         if(libraryCardNum.equals("Librarian") && password.equals("librarian123!")) {
@@ -86,16 +86,16 @@ public class LoginFrame extends JFrame implements ActionListener {
             dispose();
         }
         // user login
-        else if(WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) == null) {
+        else if(!WelcomeScreen.getLibraryCardNumDB().containsKey(Integer.parseInt(libraryCardNum))) {
             JOptionPane.showMessageDialog(this, "loginUI.User does not exist");
             return;
         }
-        else if(!passwordField.getText().equals(WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum).getPassword())) {
+        else if(!passwordField.getText().equals(WelcomeScreen.getLibraryCardNumDB().get(Integer.parseInt(libraryCardNum)).getPassword())) {
             JOptionPane.showMessageDialog(this, "Wrong password!");
             return;
         } else {
                 // loginUI.User login - Display the user's profile on the screen
-                UserFrame informationFrame = new UserFrame(WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum));
+                UserFrame informationFrame = new UserFrame(WelcomeScreen.getLibraryCardNumDB().get(Integer.parseInt(libraryCardNum)));
                 dispose();
         }
 

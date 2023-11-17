@@ -109,7 +109,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
                // System.out.println("firstname " + newUser.setFirstName(););
                 newUser.setLastName(fileInput.nextLine());
               //  System.out.println("lastname " + newUser.lastName);
-                newUser.setLibraryCardNum(fileInput.nextInt());
+                newUser.setLibraryCardNum(Integer.parseInt(fileInput.nextLine()));
               //  System.out.println("librarynum " + newUser.libraryCardNum);
                 fileInput.nextLine();
              //   newUser.setPhoneNum(fileInput.nextLong());

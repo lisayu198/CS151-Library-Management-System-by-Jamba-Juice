@@ -125,8 +125,8 @@ public class SignupFrame extends JFrame implements ActionListener {
                 User user = new User(firstName, lastName, email, password, libraryCardNum);
 
                 // Generate the libraryCardNumber
-                libraryCardNum = (int) (Math.random() * 9000 + 1000);
-                user.setLibraryCardNum(libraryCardNum);
+                //libraryCardNum = (int) (Math.random() * 9000 + 1000);
+
 
                 // Add user to HashMap
                 // If user object doesn't exist with email, then add email
@@ -141,6 +141,7 @@ public class SignupFrame extends JFrame implements ActionListener {
                 // keep regenerating username if already exists
                 while (WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) != null) {
                     libraryCardNum = ((int) (Math.random() * 900000 + 100000));
+                    user.setLibraryCardNum(libraryCardNum);
                 }
                 // Set library card number for user
                 user.setLibraryCardNum((libraryCardNum));
