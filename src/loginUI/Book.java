@@ -110,7 +110,7 @@ public class Book {
     }
 */
     private static void writeToFile() throws IOException {
-        File e = new File("outFileBooks.txt");
+        File e = new File("src/loginUI/outFileBooks.txt");
         PrintWriter out = new PrintWriter(e);
         out.print(writeToFileHelper());
         out.close();

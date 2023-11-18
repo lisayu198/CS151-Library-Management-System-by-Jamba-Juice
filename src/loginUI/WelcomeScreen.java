@@ -16,10 +16,10 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     private JButton loginButton;
 
     // Hashmap to store users with email as key
-    private static HashMap<String, User> emailMap = new HashMap<>();
+    private static HashMap<String, src.loginUI.User> emailMap = new HashMap<>();
 
     // Hashmap to store users with username as key and UserObject as value
-    private static HashMap<Integer, User> libraryCardMap = new HashMap<>();
+    private static HashMap<Integer, src.loginUI.User> libraryCardMap = new HashMap<>();
 
     // constructor
     public WelcomeScreen() throws IOException {
@@ -104,7 +104,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         File file = new File("src/loginUI/Users.txt");
         Scanner fileInput = new Scanner(file);
         while (fileInput.hasNextLine()) {
-            User newUser = new User();
+            src.loginUI.User newUser = new src.loginUI.User();
             newUser.setFirstName(fileInput.nextLine());
             // System.out.println("firstname " + newUser.setFirstName(););
             newUser.setLastName(fileInput.nextLine());
@@ -125,9 +125,9 @@ public class WelcomeScreen extends JFrame implements ActionListener {
                 a = Long.valueOf(tempLine);
                 //Integer key = Integer.valueOf(a.intValue() % 100);
                 //System.out.println(Book.BOOKS.get(key));
-                for (int k = 0; k < Book.BOOKS.size(); k++) {
-                    if (Book.BOOKS.get(k).getIsbn() == a) {
-                        newUser.borrowedBooks.add(Book.BOOKS.get(k));
+                for (int k = 0; k < src.loginUI.Book.BOOKS.size(); k++) {
+                    if (src.loginUI.Book.BOOKS.get(k).getIsbn() == a) {
+                        newUser.borrowedBooks.add(src.loginUI.Book.BOOKS.get(k));
                     }
                 }
                 // System.out.println(Book.BOOKS.get(key));
@@ -138,7 +138,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 
 
     private static void writeToFile() throws IOException {
-        File e = new File("src/outFileUsers.txt");
+        File e = new File("src/loginUI/outFileUsers.txt");
         PrintWriter out = new PrintWriter(e);
         out.print(writeToFileHelper());
         out.close();
@@ -166,21 +166,21 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     }
 
     // Getter for users Email DB
-    public static HashMap<String, User> getUsersEmailDB() {
+    public static HashMap<String, src.loginUI.User> getUsersEmailDB() {
         return emailMap;
     }
 
     // Getter for users Username DB
-    public static HashMap<Integer, User> getLibraryCardNumDB() {
+    public static HashMap<Integer, src.loginUI.User> getLibraryCardNumDB() {
         return libraryCardMap;
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == signupButton) {
-            SignupFrame signupFrame = new SignupFrame();
+            src.loginUI.SignupFrame signupFrame = new src.loginUI.SignupFrame();
             dispose();
         } else if (e.getSource() == loginButton) {
-            LoginFrame loginFrame = new LoginFrame();
+            src.loginUI.LoginFrame loginFrame = new src.loginUI.LoginFrame();
             dispose();
         }
     }
@@ -189,7 +189,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     public static void main(String[] args) throws IOException {
         Book a = new Book();
         a.populateCatalogue();
-        System.out.println(new File("src/Users.txt").getAbsolutePath());
+        System.out.println(new File("src/loginUI/Users.txt").getAbsolutePath());
         WelcomeScreen welcomeScreen = new WelcomeScreen();
 
     }
