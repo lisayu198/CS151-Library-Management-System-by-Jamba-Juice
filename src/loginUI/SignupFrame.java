@@ -125,72 +125,74 @@ public class SignupFrame extends JFrame implements ActionListener {
                 src.loginUI.User user = new src.loginUI.User(firstName, lastName, email, password, libraryCardNum);
 
                 // Generate the libraryCardNumber
-                libraryCardNum = (int) (Math.random() * 900000 + 1000);
+                libraryCardNum = (int) (Math.random() * 900000 + 10000);
 
                 // keep regenerating username if already exists
                 while (src.loginUI.WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) != null) {
                     libraryCardNum = ((int) (Math.random() * 900000 + 100000));
+
+                    // Set library card number for user
+                    user.setLibraryCardNum(libraryCardNum);
+
+                    // Add user to HashMap
+                    // If user object doesn't exist with email, then add email
+                    if (src.loginUI.WelcomeScreen.getUsersEmailDB().get(email) == null) {
+                        src.loginUI.WelcomeScreen.getUsersEmailDB().put(email, user);
+                        src.loginUI.WelcomeScreen.getLibraryCardNumDB().put(user.getLibraryCardNum(), user);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "You have an account with that email already, please try log in");
+                        return;
+                    }
+
+                    // Show username to user
+                    JOptionPane.showMessageDialog(this, "Your username is: " + libraryCardNum);
+
+                    // Save new user to backend
+                    WelcomeScreen.writeToFile();
+
+                    // After user is done, go back to welcome screen
+                    src.loginUI.WelcomeScreen welcomeScreen = new src.loginUI.WelcomeScreen();
+                    dispose();
+
                 }
 
-                // Set library card number for user
-                user.setLibraryCardNum(libraryCardNum);
-
-                // Add user to HashMap
-                // If user object doesn't exist with email, then add email
-                if (src.loginUI.WelcomeScreen.getUsersEmailDB().get(email) == null) {
-                    src.loginUI.WelcomeScreen.getUsersEmailDB().put(email, user);
-                    src.loginUI.WelcomeScreen.getLibraryCardNumDB().put(user.getLibraryCardNum(), user);
-                } else {
-                    JOptionPane.showMessageDialog(this, "You have an account with that email already, please try log in");
-                    return;
-                }
-
-                // Show username to user
-                JOptionPane.showMessageDialog(this, "Your username is: " + libraryCardNum);
-
-                // After user is done, go back to welcome screen
-                src.loginUI.WelcomeScreen welcomeScreen = new src.loginUI.WelcomeScreen();
-                dispose();
-
+            } catch(Exception ex){
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
+
+
+        // validate email address
+        public boolean isValidEmailAddress (String email) throws Exception {
+            Matcher matcher = EMAIL_PATTERN.matcher(email);
+            if (!matcher.matches()) {
+                throw new src.loginUI.EmailException();
+            }
+            return true;
+        }
+
+        // validate password
+        public boolean isValidPassword (String password) throws Exception {
+            // check if passwords are equal
+            if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+                throw new src.loginUI.PasswordsNoMatch();
+            }
+            if (!password.matches(".*[A-Z].*")) {
+                throw new src.loginUI.UpperCaseCharacterMissing();
+            }
+            if (!password.matches(".*[a-z].*")) {
+                throw new src.loginUI.LowerCaseCharacterMissing();
+            }
+            if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+                throw new src.loginUI.SpecialCharacterMissing();
+            }
+            if (!password.matches(".*\\d.*")) {
+                throw new src.loginUI.NumberCharacterMissing();
+            }
+            if (password.length() < 8) {
+                throw new src.loginUI.Minimum8CharactersRequired();
+            }
+            return true;
+        }
+
     }
-
-
-    // validate email address
-    public boolean isValidEmailAddress(String email) throws Exception {
-        Matcher matcher = EMAIL_PATTERN.matcher(email);
-        if (!matcher.matches()) {
-            throw new src.loginUI.EmailException();
-        }
-        return true;
-    }
-
-    // validate password
-    public boolean isValidPassword(String password) throws Exception {
-        // check if passwords are equal
-        if (!passwordField.getText().equals(confirmPasswordField.getText())) {
-            throw new src.loginUI.PasswordsNoMatch();
-        }
-        if (!password.matches(".*[A-Z].*")) {
-            throw new src.loginUI.UpperCaseCharacterMissing();
-        }
-        if (!password.matches(".*[a-z].*")) {
-            throw new src.loginUI.LowerCaseCharacterMissing();
-        }
-        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-            throw new src.loginUI.SpecialCharacterMissing();
-        }
-        if (!password.matches(".*\\d.*")) {
-            throw new src.loginUI.NumberCharacterMissing();
-        }
-        if (password.length() < 8) {
-            throw new src.loginUI.Minimum8CharactersRequired();
-        }
-        return true;
-    }
-
-}

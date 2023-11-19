@@ -23,7 +23,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         panel.setLayout(null);
 
         this.add(panel);
-        this.setSize(new Dimension(500, 200));
+        this.setPreferredSize(new Dimension(500, 200));
 
         // When you x out the loginUI.LoginFrame, it will go back to loginUI.WelcomeScreen
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

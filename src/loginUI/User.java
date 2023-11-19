@@ -19,6 +19,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.libraryCardNum = libraryCardNum;
+        borrowedBooks = new ArrayList<>();
     }
 
     public User() {

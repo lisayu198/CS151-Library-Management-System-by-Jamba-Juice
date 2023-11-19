@@ -137,21 +137,23 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     }
 
 
-    private static void writeToFile() throws IOException {
-        File e = new File("src/loginUI/outFileUsers.txt");
+    public static void writeToFile() throws IOException {
+        File e = new File("src/loginUI/Users.txt");
         PrintWriter out = new PrintWriter(e);
         out.print(writeToFileHelper());
         out.close();
     }
 
+    // Loop through Hashmap using keySet
     private static StringBuilder writeToFileHelper() {
         StringBuilder a = new StringBuilder("");
-        for (int i = 0; i < libraryCardMap.size(); i++) {
-            a.append(libraryCardMap.get(i).getFirstName() + "\n");
-            a.append(libraryCardMap.get(i).getLastName() + "\n");
-            a.append(libraryCardMap.get(i).getLibraryCardNum() + "\n");
+        // Put all keys into an array and loop through
+        for (Integer key : libraryCardMap.keySet()) {
+            a.append(libraryCardMap.get(key).getFirstName() + "\n");
+            a.append(libraryCardMap.get(key).getLastName() + "\n");
+            a.append(libraryCardMap.get(key).getLibraryCardNum() + "\n");
             // a.append(libraryCardMap.get(i).phoneNum + "\n");
-            for (Book J : libraryCardMap.get(i).borrowedBooks) {
+            for (Book J : libraryCardMap.get(key).borrowedBooks) {
                 a.append(J.getIsbn() + "\n");
             }
             a.append("\n");
@@ -193,6 +195,5 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
 
     }
-
 
 }
