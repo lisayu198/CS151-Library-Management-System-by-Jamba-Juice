@@ -5,12 +5,14 @@ true
 GOOD
 3
 
+
 The Very Hungry Caterpillar 
 Eric Carl
 9780140569322
 true
 NEW
 1
+
 
 Twilight
 Stephenie Meyer
@@ -19,12 +21,14 @@ true
 GOOD
 5
 
+
 The Great Gatsby
 F. Scott Fitzgerald 
 9780333791035
 true
 FAIR
 4
+
 
 Adventures of Huckleberry Fin
 Mark Twain 
@@ -33,6 +37,7 @@ true
 GOOD
 2
 
+
 All the Right Places
 Jennifer Niven
 9783734104657
@@ -40,12 +45,12 @@ true
 POOR
 4
 
+
 Goodnight Moon
 Margret Wise Brown
 9780061119774
 true
-FAIR
-2
+
 
 My Sister’s Keeper
 Jodi Picoult
@@ -54,12 +59,14 @@ true
 FAIR
 5
 
+
 The Hunger Games
 Suzzane Collins
 9780545791878
 true
 NEW
 9
+
 
 The Fault in Our Stars
 John Green
@@ -68,12 +75,14 @@ true
 GOOD
 5
 
+
 The Cat in The Hat
 Dr. Suess
 9780007247912
 true
 POOR
 7
+
 
 The Hobbit
 J.R.R. Tolkien
@@ -82,6 +91,7 @@ true
 FAIR
 3
 
+
 Anne of Green Gables
 L.M. Montgomery
 9780194229654
@@ -89,17 +99,8 @@ true
 NEW
 10
 
-Life of Pi
-Yann Martel
-9780156027328
-true
-NEW
-3
 
-To Kill a Mockingbird
-Harper Lee
-9782253115847
-true
-NEW
-9
-
+book
+me
+123456789
+POOR

@@ -80,8 +80,13 @@ public class UserFrame extends JFrame {
         userInfoPanel.setLayout(layout);
         // display the user's first and last name, plus the username
         userInfoPanel.add(Box.createHorizontalGlue());
-        JLabel firstNameLastName = new JLabel(user.getFirstName() + " " + user.getLastName() + "; ");
+
+        char firstInitial = user.getFirstName().charAt(0);
+        char lastInitial = user.getLastName().charAt(0);
+        JLabel firstNameLastName = new JLabel(firstInitial + " " + lastInitial + ": ");
         JLabel userName =  new JLabel(String.valueOf(user.getLibraryCardNum()));
+
+
         userInfoPanel.add(firstNameLastName);
         userInfoPanel.add(userName);
 

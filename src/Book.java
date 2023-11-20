@@ -128,7 +128,7 @@ public class Book {
             a.append(BOOKS.get(i).isbn.toString() + "\n");
             a.append(String.valueOf(BOOKS.get(i).checkedIn) + "\n");
             a.append(String.valueOf(BOOKS.get(i).condition) + "\n");
-            a.append(String.valueOf(BOOKS.get(i).copies) + "\n\n");
+            a.append(String.valueOf(BOOKS.get(i).copies) + "\n");
 
         }
 

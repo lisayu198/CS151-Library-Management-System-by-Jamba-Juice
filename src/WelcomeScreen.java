@@ -190,7 +190,6 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     public static void main(String[] args) throws IOException {
         Book a = new Book();
         a.populateCatalogue();
-        System.out.println(new File("Users.txt").getAbsolutePath());
         WelcomeScreen welcomeScreen = new WelcomeScreen();
 
     }
