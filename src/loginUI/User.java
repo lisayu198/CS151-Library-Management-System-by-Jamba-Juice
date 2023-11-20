@@ -7,23 +7,24 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String userid;
     private String password;
     private int libraryCardNum;
-    // int libraryCardNum;
-    ArrayList<Book> borrowedBooks;
+    private ArrayList<Book> borrowedBooks;
 
 
     public User(String firstName, String lastName, String email, String password, int libraryCardNum) {
+        super();
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.libraryCardNum = libraryCardNum;
-        borrowedBooks = new ArrayList<>();
     }
 
     public User() {
-
+        this.borrowedBooks = new ArrayList<>();
     }
 
     // Getters and setters
@@ -70,21 +71,28 @@ public class User {
 
     // add the new book passed in into the arraylist
     // "checking out a book from the library"
-//    public void checkOutBook(Book book) throws UnavailableBookException {
-//        try {
-//            if (!book.isAvailable()) {
-//                throw new UnavailableBookException("Book is not available for check out");
-//            }
-//            // code to check out the book
-//        } catch (UnavailableBookException e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
-//    }
+    public void checkOutBook(Book book) throws UnavailableBookException {
+        try {
+            if (!book.isAvailable()) {
+                throw new UnavailableBookException("Book is not available for check out");
+            }
+            // code to check out the book
+        } catch (UnavailableBookException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
     // remove book that is returned
     // "returning a book back to the library"
     public void removeBorrowedBooks(ArrayList<Book> list, Book book) {
         list.remove(book);
+    }
+
+    public ArrayList<Book> getBorrowedBooks() {
+        if (this.borrowedBooks == null) {
+            this.borrowedBooks = new ArrayList<>();
+        }
+        return this.borrowedBooks;
     }
 
     // check this user with another user

@@ -23,6 +23,8 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 
     // constructor
     public WelcomeScreen() throws IOException {
+        // load all books, users need to reference books
+        loadBooks();
         // get existing username and password
         loadUsers();
 
@@ -91,51 +93,92 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         setTitle("Jamba Juice Library Login Page");
         setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        buildContent();
 
         setLocationRelativeTo(null);    // center the JFrame on the screen
         setVisible(true);
 
     }
 
-    // loadUsers method
+    // load books from backend database file
+    public void loadBooks() {
+        try {
+            Book.populateCatalogue();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    // load users from backend database file
     public void loadUsers() throws IOException {
-        // TO DO - Wait for Nelly for file
+        // clear previous users
+        libraryCardMap.clear();
+
+        // Read from backend database file
         File file = new File("src/loginUI/Users.txt");
+
+        Scanner scanner = new Scanner(file);
+        if (scanner.hasNextLine()) {
+            String firstLine = scanner.nextLine();
+            System.out.println("First line: " + firstLine);
+        } else {
+            System.out.println("The file is empty.");
+        }
+        scanner.close();
+
         Scanner fileInput = new Scanner(file);
         while (fileInput.hasNextLine()) {
             src.loginUI.User newUser = new src.loginUI.User();
             newUser.setFirstName(fileInput.nextLine());
-            // System.out.println("firstname " + newUser.setFirstName(););
+            System.out.println("firstname " + newUser.getFirstName());
             newUser.setLastName(fileInput.nextLine());
-            //  System.out.println("lastname " + newUser.lastName);
+            System.out.println("lastname " + newUser.getLastName());
+            newUser.setEmail(fileInput.nextLine());
+            System.out.println("Email " + newUser.getEmail());
+            newUser.setPassword(fileInput.nextLine());
+            System.out.println("Password " + newUser.getPassword());
             newUser.setLibraryCardNum(fileInput.nextInt());
-            //  System.out.println("librarynum " + newUser.libraryCardNum);
-            fileInput.nextLine();
-            //   newUser.setPhoneNum(fileInput.nextLong());
-            //   System.out.println("phonenum " + newUser.phoneNum);
-            //  fileInput.nextLine();
+            System.out.println("librarynum " + newUser.getLibraryCardNum());
+
+            System.out.println("Flusing " + fileInput.nextLine());   // flush the newline after nextInt
+
+            // Store to libraryCardMap
             libraryCardMap.put(newUser.getLibraryCardNum(), newUser);
+
+            // if there is next line, it is checkout book isbn
             while (fileInput.hasNextLine()) {
-                String tempLine = fileInput.nextLine();
-                if (tempLine.length() == 0) {
-                    break;
-                }
-                Long a;
-                a = Long.valueOf(tempLine);
-                //Integer key = Integer.valueOf(a.intValue() % 100);
-                //System.out.println(Book.BOOKS.get(key));
-                for (int k = 0; k < src.loginUI.Book.BOOKS.size(); k++) {
-                    if (src.loginUI.Book.BOOKS.get(k).getIsbn() == a) {
-                        newUser.borrowedBooks.add(src.loginUI.Book.BOOKS.get(k));
+                try {
+                    String tempLine = fileInput.nextLine();
+                    if (tempLine.length() == 0) {
+                        break;
                     }
+                    System.out.println("Starting of books: " + tempLine);
+                    if (WelcomeScreen.isInteger(tempLine)) {
+                        Long a;
+                        a = Long.valueOf(tempLine);
+                        for (int k = 0; k < src.loginUI.Book.BOOKS.size(); k++) {
+                            if (src.loginUI.Book.BOOKS.get(k).getIsbn().longValue() == a) {
+                                newUser.getBorrowedBooks().add(src.loginUI.Book.BOOKS.get(k));
+                                System.out.println("Book checked out: " + src.loginUI.Book.BOOKS.get(k).getTitle());
+                                break;
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
                 }
-                // System.out.println(Book.BOOKS.get(key));
             }
         }
         fileInput.close();
     }
 
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
     public static void writeToFile() throws IOException {
         File e = new File("src/loginUI/Users.txt");
@@ -151,9 +194,11 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         for (Integer key : libraryCardMap.keySet()) {
             a.append(libraryCardMap.get(key).getFirstName() + "\n");
             a.append(libraryCardMap.get(key).getLastName() + "\n");
+            a.append(libraryCardMap.get(key).getEmail() + "\n");
+            a.append(libraryCardMap.get(key).getPassword() + "\n");
             a.append(libraryCardMap.get(key).getLibraryCardNum() + "\n");
             // a.append(libraryCardMap.get(i).phoneNum + "\n");
-            for (Book J : libraryCardMap.get(key).borrowedBooks) {
+            for (Book J : libraryCardMap.get(key).getBorrowedBooks()) {
                 a.append(J.getIsbn() + "\n");
             }
             a.append("\n");
@@ -161,11 +206,6 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         return a;
     }
 
-
-    // build content
-    public static void buildContent() {
-
-    }
 
     // Getter for users Email DB
     public static HashMap<String, src.loginUI.User> getUsersEmailDB() {
@@ -189,11 +229,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 
 
     public static void main(String[] args) throws IOException {
-        Book a = new Book();
-        a.populateCatalogue();
-        System.out.println(new File("src/loginUI/Users.txt").getAbsolutePath());
         WelcomeScreen welcomeScreen = new WelcomeScreen();
-
     }
 
 }

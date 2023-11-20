@@ -59,7 +59,11 @@ public class Book {
         this.author = author;
     }
 
-    public void populateCatalogue() throws IOException {
+    public static ArrayList<Book> getBooks() {
+        return BOOKS;
+    }
+
+    public static void populateCatalogue() throws Exception {
 
         File file = new File("src/loginUI/Books.txt");
 
@@ -67,24 +71,23 @@ public class Book {
         // String condition;
 
         while (fileInput.hasNextLine()) {
+            Book newBook = new Book();
 
-            this.title = fileInput.nextLine();
+            newBook.title = fileInput.nextLine();
 
-            this.author = fileInput.nextLine();
+            newBook.author = fileInput.nextLine();
 
-            this.isbn = Long.valueOf(fileInput.next());
+            newBook.isbn = Long.valueOf(fileInput.next());
 
-            this.checkedIn = Boolean.valueOf(fileInput.next());
+            newBook.checkedIn = Boolean.valueOf(fileInput.next());
 
-            this.condition = Enum.valueOf(CONDITION.class, fileInput.next());
+            newBook.condition = Enum.valueOf(CONDITION.class, fileInput.next());
 
             fileInput.nextLine();
-            this.copies = fileInput.nextInt();
+            newBook.copies = fileInput.nextInt();
             fileInput.nextLine();
             fileInput.nextLine();
 
-
-            Book newBook = new Book(title, isbn, author, this.condition, checkedIn, copies);
 
             //Integer key = Integer.valueOf(isbn.intValue()%100);
 
@@ -110,7 +113,7 @@ public class Book {
     }
 */
     private static void writeToFile() throws IOException {
-        File e = new File("src/loginUI/outFileBooks.txt");
+        File e = new File("src/loginUI/Books.txt");
         PrintWriter out = new PrintWriter(e);
         out.print(writeToFileHelper());
         out.close();
@@ -169,7 +172,11 @@ public class Book {
 
     public static void main(String[] args) throws IOException {
         Book newBook = new Book();
-        newBook.populateCatalogue();
+        try {
+            newBook.populateCatalogue();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         writeToFile();
 
 

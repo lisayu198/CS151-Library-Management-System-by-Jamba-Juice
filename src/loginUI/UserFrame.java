@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class UserFrame extends JFrame {
     // class variables
@@ -26,12 +27,13 @@ public class UserFrame extends JFrame {
     // constructor
     public UserFrame(User user) {
         this.user = user;
-        this.setTitle("loginUI.User Info");
+        this.setTitle("User Page");
 
         this.setSize(new Dimension(800, 500));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        getUserBookList();          // get bookList from database
+        getUserBookList();          // get borrowed bookList from current user
+        getLibraryBooksList();      // get library books
 
 
         this.buildUserInfoPanel();                 // build content inside the userInfoPanel
@@ -86,13 +88,13 @@ public class UserFrame extends JFrame {
         userInfoPanel.add(userName);
 
         // Logout button; return to homescreen
-        // TO-DO, send new checkoutBooksList to file
-
+        // send new checkoutBooksList to file
         JButton logoutButton = new JButton("Logout");
         userInfoPanel.add(logoutButton);
         logoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
+                    WelcomeScreen.writeToFile();
                     WelcomeScreen welcomeScreen = new WelcomeScreen();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -107,8 +109,6 @@ public class UserFrame extends JFrame {
     public void buildLibraryBooksPanel() {
         BoxLayout layout = new BoxLayout(libraryBooksPanel, BoxLayout.Y_AXIS);
         libraryBooksPanel.setLayout(layout);
-
-        // libraryBooksPanel.add(Box.createVerticalGlue());
 
         // List of books in LIBRARY
         JLabel libraryBooksLabel = new JLabel("Books in Library: ");
@@ -207,15 +207,19 @@ public class UserFrame extends JFrame {
     }
 
 
-    // TO-DO ; booklist from NELLY
+    // Load booklist for current user
     public void getUserBookList() {
-        // TO-DO : GET BOOKLIST FROM TEXT FILE
-        String bookList[] = {"Korean Fashion", "How to get rich", "Cookbook"};
-        for (int ii = 0; ii < bookList.length; ii++) {
-            usersBooksModel.addElement(bookList[ii]);
+        for (int ii = 0; ii < this.user.getBorrowedBooks().size(); ii++) {
+            usersBooksModel.addElement(this.user.getBorrowedBooks().get(ii).getTitle());
         }
+    }
 
-
+    // Load booklist from library
+    public void getLibraryBooksList() {
+        ArrayList<Book> bookList = Book.getBooks();
+        for (int ii = 0; ii < bookList.size(); ii++) {
+            libraryBooksModel.addElement(bookList.get(ii).getTitle());
+        }
     }
 
 }

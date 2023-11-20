@@ -263,10 +263,9 @@ public class Library {
                 writer.write(bookInfo);
                 writer.newLine();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(libraryFrame, "man something went wrong :(" + e.getMessage(),
-                    "eeeeeeee", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(libraryFrame, "Error:" + e.getMessage(),
+                    e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -316,6 +315,10 @@ public class Library {
             }
             bookString.setListData(bookTitles.toArray(new String[0]));
         });
+    }
+
+    public List<String> getBookList() {
+        return bookList;
     }
 
     private void showBookDetails(int selectedIndex) {
