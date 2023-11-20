@@ -246,7 +246,7 @@ public class Library {
         String isbn = isbnInput.getText();
 
         if (!bookTitle.isEmpty() && !authorName.isEmpty() && !isbn.isEmpty()) {
-            bookList.add(bookTitle);
+            bookList.add(bookTitle + "\n" + authorName + "\n" + isbn + "\n" + "true\n" + "NEW\n5");
 
             updateBookListFile();
             updateBookList();
@@ -261,8 +261,9 @@ public class Library {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(bookFile))) {
             for (String bookInfo : bookList) {
                 writer.write(bookInfo);
-                writer.newLine();
+                // writer.newLine();
             }
+            writer.newLine();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(libraryFrame, "Error:" + e.getMessage(),
                     e.getMessage(), JOptionPane.ERROR_MESSAGE);
