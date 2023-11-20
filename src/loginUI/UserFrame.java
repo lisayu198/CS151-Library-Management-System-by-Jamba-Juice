@@ -27,7 +27,7 @@ public class UserFrame extends JFrame {
     // constructor
     public UserFrame(User user) {
         this.user = user;
-        this.setTitle("User Page");
+        this.setTitle("USER PAGE");
 
         this.setSize(new Dimension(800, 500));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -142,6 +142,13 @@ public class UserFrame extends JFrame {
                     libraryBooksModel.remove(selectedIndex);
                     // add book user's checkedout book list
                     usersBooksModel.addElement(bookRemoved);
+
+                    for (Book book : Book.getBooks()) {
+                        if (book.getTitle().equals(bookRemoved)) {
+                            UserFrame.this.user.getBorrowedBooks().add(book);
+                            break;
+                        }
+                    }
                 }
             }
         });
@@ -218,8 +225,20 @@ public class UserFrame extends JFrame {
     public void getLibraryBooksList() {
         ArrayList<Book> bookList = Book.getBooks();
         for (int ii = 0; ii < bookList.size(); ii++) {
-            libraryBooksModel.addElement(bookList.get(ii).getTitle());
+            if (!isBookCheckedOut(bookList.get(ii).getTitle())) {
+                libraryBooksModel.addElement(bookList.get(ii).getTitle());
+            }
         }
+    }
+
+    private boolean isBookCheckedOut(String bookName) {
+        for (int ii = 0; ii < usersBooksModel.size(); ii++) {
+            if (usersBooksModel.get(ii).equals(bookName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

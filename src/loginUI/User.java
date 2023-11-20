@@ -9,11 +9,11 @@ public class User {
     private String email;
     private String userid;
     private String password;
-    private int libraryCardNum;
+    private String libraryCardNum;
     private ArrayList<Book> borrowedBooks;
 
 
-    public User(String firstName, String lastName, String email, String password, int libraryCardNum) {
+    public User(String firstName, String lastName, String email, String password, String libraryCardNum) {
         super();
 
         this.firstName = firstName;
@@ -61,11 +61,11 @@ public class User {
     }
 
 
-    public int getLibraryCardNum() {
+    public String getLibraryCardNum() {
         return libraryCardNum;
     }
 
-    public void setLibraryCardNum(int num) {
+    public void setLibraryCardNum(String num) {
         this.libraryCardNum = num;
     }
 

@@ -122,15 +122,15 @@ public class SignupFrame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Please enter valid information");
             } else {
                 // Create a user object
-                int libraryCardNum = 0;
+                String libraryCardNum = "";
                 src.loginUI.User user = new src.loginUI.User(firstName, lastName, email, password, libraryCardNum);
 
                 // Generate the libraryCardNumber
-                libraryCardNum = (int) (Math.random() * 900000 + 1000);
+                libraryCardNum = Integer.toString((int) (Math.random() * 900000 + 1000));
 
                 // keep regenerating username if already exists
                 while (src.loginUI.WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) != null) {
-                    libraryCardNum = ((int) (Math.random() * 900000 + 100000));
+                    libraryCardNum = Integer.toString(((int) (Math.random() * 900000 + 100000)));
                 }
 
                 // Set library card number for user
@@ -148,7 +148,7 @@ public class SignupFrame extends JFrame implements ActionListener {
 
                 // Show username to user
                 try {
-                    JOptionPane.showMessageDialog(this, "Your username is: " + Integer.toString(libraryCardNum));
+                    JOptionPane.showMessageDialog(this, "Your username is: " + libraryCardNum);
                 } catch (Exception ex) {
 
                 }

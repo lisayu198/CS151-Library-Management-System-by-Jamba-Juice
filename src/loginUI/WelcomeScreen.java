@@ -19,7 +19,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     private static HashMap<String, src.loginUI.User> emailMap = new HashMap<>();
 
     // Hashmap to store users with username as key and UserObject as value
-    private static HashMap<Integer, src.loginUI.User> libraryCardMap = new HashMap<>();
+    private static HashMap<String, src.loginUI.User> libraryCardMap = new HashMap<>();
 
     // constructor
     public WelcomeScreen() throws IOException {
@@ -136,10 +136,9 @@ public class WelcomeScreen extends JFrame implements ActionListener {
             System.out.println("Email " + newUser.getEmail());
             newUser.setPassword(fileInput.nextLine());
             System.out.println("Password " + newUser.getPassword());
-            newUser.setLibraryCardNum(fileInput.nextInt());
+            newUser.setLibraryCardNum(fileInput.nextLine());
             System.out.println("librarynum " + newUser.getLibraryCardNum());
 
-            System.out.println("Flusing " + fileInput.nextLine());   // flush the newline after nextInt
 
             // Store to libraryCardMap
             libraryCardMap.put(newUser.getLibraryCardNum(), newUser);
@@ -152,17 +151,15 @@ public class WelcomeScreen extends JFrame implements ActionListener {
                         break;
                     }
                     System.out.println("Starting of books: " + tempLine);
-                    if (WelcomeScreen.isInteger(tempLine)) {
-                        Long a;
-                        a = Long.valueOf(tempLine);
-                        for (int k = 0; k < src.loginUI.Book.BOOKS.size(); k++) {
-                            if (src.loginUI.Book.BOOKS.get(k).getIsbn().longValue() == a) {
-                                newUser.getBorrowedBooks().add(src.loginUI.Book.BOOKS.get(k));
-                                System.out.println("Book checked out: " + src.loginUI.Book.BOOKS.get(k).getTitle());
-                                break;
-                            }
+
+                    for (int k = 0; k < src.loginUI.Book.BOOKS.size(); k++) {
+                        if (src.loginUI.Book.BOOKS.get(k).getIsbn().equals(tempLine)) {
+                            newUser.getBorrowedBooks().add(src.loginUI.Book.BOOKS.get(k));
+                            System.out.println("Book checked out: " + src.loginUI.Book.BOOKS.get(k).getTitle());
+                            break;
                         }
                     }
+
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -191,13 +188,12 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     private static StringBuilder writeToFileHelper() {
         StringBuilder a = new StringBuilder("");
         // Put all keys into an array and loop through
-        for (Integer key : libraryCardMap.keySet()) {
+        for (String key : libraryCardMap.keySet()) {
             a.append(libraryCardMap.get(key).getFirstName() + "\n");
             a.append(libraryCardMap.get(key).getLastName() + "\n");
             a.append(libraryCardMap.get(key).getEmail() + "\n");
             a.append(libraryCardMap.get(key).getPassword() + "\n");
             a.append(libraryCardMap.get(key).getLibraryCardNum() + "\n");
-            // a.append(libraryCardMap.get(i).phoneNum + "\n");
             for (Book J : libraryCardMap.get(key).getBorrowedBooks()) {
                 a.append(J.getIsbn() + "\n");
             }
@@ -213,7 +209,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     }
 
     // Getter for users Username DB
-    public static HashMap<Integer, src.loginUI.User> getLibraryCardNumDB() {
+    public static HashMap<String, src.loginUI.User> getLibraryCardNumDB() {
         return libraryCardMap;
     }
 

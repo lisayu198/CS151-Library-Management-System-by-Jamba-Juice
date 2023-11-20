@@ -22,6 +22,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.add(panel);
         this.setSize(new Dimension(500, 200));
         this.setResizable(false);
+        this.setTitle("USER LOGIN");
 
         // When you x out the loginUI.LoginFrame, it will go back to loginUI.WelcomeScreen
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -84,15 +85,15 @@ public class LoginFrame extends JFrame implements ActionListener {
             dispose();
         }
         // user login
-        else if (WelcomeScreen.getLibraryCardNumDB().get(Integer.valueOf(libraryCardNum)) == null) {
+        else if (WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) == null) {
             JOptionPane.showMessageDialog(this, "User does not exist");
             return;
-        } else if (!password.equals(WelcomeScreen.getLibraryCardNumDB().get(Integer.valueOf(libraryCardNum)).getPassword().toString())) {
+        } else if (!password.equals(WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum).getPassword().toString())) {
             JOptionPane.showMessageDialog(this, "Wrong password!");
             return;
         } else {
             // loginUI.User login - Display the user's profile on the screen
-            UserFrame informationFrame = new UserFrame(WelcomeScreen.getLibraryCardNumDB().get(Integer.valueOf(libraryCardNum)));
+            UserFrame informationFrame = new UserFrame(WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum));
             dispose();
         }
 

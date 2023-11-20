@@ -15,7 +15,7 @@ public class Book {
 
     private String title;
     private boolean checkedIn;
-    private Long isbn;
+    private String isbn;
     private String author;
     private CONDITION condition;
     private int copies;
@@ -26,7 +26,7 @@ public class Book {
 
     }
 
-    public Book(String title, Long isbn, String author, CONDITION condition, Boolean checkedIn, int copies) {
+    public Book(String title, String isbn, String author, CONDITION condition, Boolean checkedIn, int copies) {
         this.title = title;
         this.isbn = isbn;
         this.author = author;
@@ -43,11 +43,11 @@ public class Book {
         this.title = title;
     }
 
-    public Long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Long isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -77,7 +77,7 @@ public class Book {
 
             newBook.author = fileInput.nextLine();
 
-            newBook.isbn = Long.valueOf(fileInput.next());
+            newBook.isbn = fileInput.nextLine();
 
             newBook.checkedIn = Boolean.valueOf(fileInput.next());
 
@@ -125,7 +125,7 @@ public class Book {
         for (int i = 0; i < BOOKS.size(); i++) {
             a.append(BOOKS.get(i).title + "\n");
             a.append(BOOKS.get(i).author + "\n");
-            a.append(BOOKS.get(i).isbn.toString() + "\n");
+            a.append(BOOKS.get(i).isbn + "\n");
             a.append(String.valueOf(BOOKS.get(i).checkedIn) + "\n");
             a.append(String.valueOf(BOOKS.get(i).condition) + "\n");
             a.append(String.valueOf(BOOKS.get(i).copies) + "\n\n");
