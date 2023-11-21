@@ -294,11 +294,11 @@ public class Library {
         loginUI.Book.CONDITION condition = (loginUI.Book.CONDITION) bookCondition.getSelectedItem();
 
         if (!bookTitle.isEmpty() && !authorName.isEmpty() && !isbn.isEmpty()) {
-            String newBook = String.format("%s\n%s\n%s\n%s", bookTitle, authorName, isbn, condition);
+            String newBook = String.format("%s\n%s\n%s\ntrue\n%s\n1\n\n", bookTitle, authorName, isbn, condition);
             bookList.add(newBook);
             updateBookListFile();
             updateBookList();
-            
+
             // reset
             bookInput.setText("");
             authorInput.setText("");
