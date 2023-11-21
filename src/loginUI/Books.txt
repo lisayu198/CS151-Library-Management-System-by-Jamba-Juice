@@ -8,14 +8,14 @@ GOOD
 The Very Hungry Caterpillar
 Eric Carl
 9780140569322
-false
+true
 NEW
 1
 
 Twilight
 Stephenie Meyer
 9780316038379
-false
+true
 GOOD
 1
 
@@ -78,7 +78,7 @@ POOR
 The Hobbit
 J.R.R. Tolkien
 9780261102217
-false
+true
 FAIR
 1
 
