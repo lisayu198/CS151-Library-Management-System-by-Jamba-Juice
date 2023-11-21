@@ -167,8 +167,10 @@ public class UserFrame extends JFrame {
                     String bookRemoved = libraryBooksModel.getElementAt(selectedIndex);
                     // remove checkedOut book from library
                     libraryBooksModel.remove(selectedIndex);
+                    libraryBooksLabel.updateUI();
                     // add book user's checkedout book list
                     usersBooksModel.addElement(bookRemoved);
+                    checkOutButton.setEnabled(false);
 
                     for (Book book : loginUI.Book.getBooks()) {
                         if (book.getTitle().equals(bookRemoved)) {
@@ -232,6 +234,15 @@ public class UserFrame extends JFrame {
                     String bookRemoved = usersBooksModel.getElementAt(selectedIndex);
                     // remove checkedIn book from user's bookList
                     usersBooksModel.remove(selectedIndex);
+                    userCheckoutBookList.updateUI();
+                    for (Book book : loginUI.Book.getBooks()) {
+                        if (book.getTitle().equals(bookRemoved)) {
+                            UserFrame.this.user.getBorrowedBooks().remove(book);
+                            break;
+                        }
+                    }
+                    
+                    checkinButton.setEnabled(false);
                     // add book back to Library (books available)
                     libraryBooksModel.addElement(bookRemoved);
                 }

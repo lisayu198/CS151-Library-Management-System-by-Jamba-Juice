@@ -93,7 +93,7 @@ public class Library {
     /**
      * creates the library panel (left)
      */
-    private JPanel createLibraryPanel(){
+    private JPanel createLibraryPanel() {
         JPanel libraryPanel = new JPanel(new GridBagLayout());
         libraryPanel.setBackground(Color.decode("#fec7d7"));
         /**
@@ -238,7 +238,7 @@ public class Library {
          */
         bookConstraints.gridx = 0;
         bookConstraints.gridy = 5;
-        addBook.setPreferredSize(new Dimension(5,30));
+        addBook.setPreferredSize(new Dimension(5, 30));
         bookPanel.add(addBook, bookConstraints);
 
         return bookPanel;
@@ -257,7 +257,7 @@ public class Library {
             DefaultListModel<String> model = (DefaultListModel<String>) bookJList.getModel();
             model.removeElementAt(selectedIndex);
             String selectedBook = bookList.get(selectedIndex);
-            if(selectedBook != null){
+            if (selectedBook != null) {
                 bookList.remove(selectedBook);
             }
 
@@ -298,9 +298,13 @@ public class Library {
             bookList.add(newBook);
             updateBookListFile();
             updateBookList();
+            
+            // reset
+            bookInput.setText("");
+            authorInput.setText("");
+            isbnInput.setText("");
         }
     }
-
 
 
     /**
@@ -315,6 +319,7 @@ public class Library {
             for (String newBook : bookList) {
                 writer.write(newBook);
             }
+            writer.write("\n");
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(libraryFrame, "Error" + e.getMessage(),
@@ -325,7 +330,6 @@ public class Library {
 
     /**
      * basically reads the books on the file to be used by the update method below
-     *
      */
     private List<String> readBookListFromFile() {
         bookList = new ArrayList<>();
@@ -338,6 +342,12 @@ public class Library {
                     bookList.add(bookInfo.toString());
                     bookInfo.setLength(0);
                 }
+            }
+
+            // Add the last one if not added
+            if (bookInfo.length() != 0) {
+                bookList.add(bookInfo.toString());
+                bookInfo.setLength(0);
             }
         } catch (IOException e) {
             e.printStackTrace();

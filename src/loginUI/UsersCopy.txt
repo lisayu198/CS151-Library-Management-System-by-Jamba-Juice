@@ -1,12 +1,3 @@
-road
-runner
-rr@gmail.com
-Password1!
-731038
-9780333791035
-9783734104657
-9780545791878
-
 Maria
 Belmont
 mb@gmail.com
@@ -20,5 +11,5 @@ Yu
 ly@gmail.com
 Password1!
 19834
+9780333791035
 9780060467210
-
