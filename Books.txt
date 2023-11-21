@@ -98,9 +98,3 @@ L.M. Montgomery
 true
 NEW
 10
-
-
-book
-me
-123456789
-POOR

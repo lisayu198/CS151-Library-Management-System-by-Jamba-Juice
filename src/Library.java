@@ -12,20 +12,26 @@ import java.awt.event.MouseEvent;
 
 public class Library {
 
+    /**
+     * library panel UI
+     */
     String[] array = new String[20];
     private List<String> bookList;
     String bookFile = "Books.txt";
     JFrame libraryFrame = new JFrame("library frame");
     JPanel panel = new JPanel(new GridLayout(1, 2));
     JButton removeBook = new JButton("removeth thyst books");
-    ImageIcon userIcon = new ImageIcon("C:\\Users\\anisp\\Downloads\\FreddyFazbear_2__54364.jpg");
-    ImageIcon hehe = new ImageIcon("C:\\Users\\anisp\\Downloads\\feeby jumpscare.png");
-    Image scale = userIcon.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH);
-    ImageIcon updatedIcon = new ImageIcon(scale);
-    JButton userAccount = new JButton(updatedIcon);
+    //ImageIcon userIcon = new ImageIcon("C:\\Users\\anisp\\Downloads\\FreddyFazbear_2__54364.jpg");
+    //ImageIcon hehe = new ImageIcon("C:\\Users\\anisp\\Downloads\\feeby jumpscare.png");
+    //Image scale = userIcon.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH);
+    //ImageIcon updatedIcon = new ImageIcon(scale);
+    //JButton userAccount = new JButton(updatedIcon);
     JLabel titleLabel = new JLabel("list of available bookies");
     JList<String> bookJList;
 
+    /**
+     * book panel UI
+     */
     JLabel descriptionLabel = new JLabel("pls enter bok info ty");
     JTextField bookInput = new JTextField(20);
     JTextField authorInput = new JTextField(20);
@@ -37,6 +43,11 @@ public class Library {
     JLabel bookConditionLabel = new JLabel("book condition?");
     JButton addBook = new JButton("addeth thyst books");
 
+    /**
+     * https://www.javamex.com/tutorials/threads/invokelater.shtml
+     * link for SwingUtilities.invokeLater
+     * calls libraryUI first, then readBookListFromFile, then updateBookList
+     */
     public Library(){
         SwingUtilities.invokeLater(() -> {
             LibraryUI();
@@ -45,6 +56,10 @@ public class Library {
         });
 
     }
+
+    /**
+     * main frame UI method
+     */
     public void LibraryUI(){
         bookList = readBookListFromFile();
 
@@ -61,24 +76,22 @@ public class Library {
          * http://www.java2s.com/Tutorial/Java/0260__Swing-Event/DetectingDoubleandTripleClicks.htm
          * link for double clicking in Java Swing
          */
-        /*bookJList.addMouseListener(new MouseAdapter() {
+        bookJList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent click) {
-                if (click.getClickCount() == 2) {
-                    String selectedIndex = bookJList.getSelectedValue();
-                    if (selectedIndex != null) {
-                        for(String bookTitle : bookList) {
-                            if(selectedIndex.equals(bookTitle)) {
-                                JOptionPane.showMessageDialog(libraryFrame, bookTitle, "book info", JOptionPane.INFORMATION_MESSAGE);
-                            }
-
-                        }
+                if (click.getClickCount() == 2) { //double click
+                    int selectedIndex = bookJList.getSelectedIndex(); //which book in JList is selected
+                    System.out.println(selectedIndex); //debug
+                    if (selectedIndex != -1) { //make sure its not >0
+                        String bookTitle = bookList.get(selectedIndex); //retrieves matching book from bookList array
+                        System.out.println(bookTitle); //debug
+                        JOptionPane.showMessageDialog(libraryFrame, bookTitle, "book info", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
-        });*/
+        });
 
-        userAccount.addActionListener(this::actionPerformed);
+        //userAccount.addActionListener(this::actionPerformed);
         removeBook.addActionListener(this::actionPerformed);
         addBook.addActionListener(this::addBookAction);
     }
@@ -147,8 +160,8 @@ public class Library {
         iconConstraints.gridy = 0;
         iconConstraints.anchor = GridBagConstraints.NORTHEAST;
         iconConstraints.insets = new Insets(10, 10, 10, 10);
-        userAccount.setPreferredSize(new Dimension(30,30));
-        libraryPanel.add(userAccount, iconConstraints);
+        //userAccount.setPreferredSize(new Dimension(30,30));
+        //libraryPanel.add(userAccount, iconConstraints);
 
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setForeground(Color.decode("#0e172c"));
@@ -212,6 +225,8 @@ public class Library {
 
         /**
          * adding book condition drop down
+         * https://stackoverflow.com/questions/1459069/populating-swing-jcombobox-from-enum
+         * link for how to use jcombobox with enums
          */
         bookConstraints.gridx = 1;
         bookConstraints.gridy = 3;
@@ -239,11 +254,14 @@ public class Library {
     private void actionPerformed(ActionEvent buttonClicked) {
         int selectedIndex = bookJList.getSelectedIndex();
         if (selectedIndex != -1) {
-            DefaultListModel<String> model = (DefaultListModel<String>) bookJList.getModel();
+            DefaultListModel<String> model = (DefaultListModel<String>) bookJList.getModel(); //default list model to remove books from JList
             model.removeElementAt(selectedIndex);
+            bookList.remove(selectedIndex);
+            updateBookListFile();
         }
-
     }
+
+
 
     /**
      * duplicate code to test methods and implementations
@@ -289,8 +307,8 @@ public class Library {
      */
     private void updateBookListFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(bookFile))) {
-            for (String newBook : bookList) {
-                writer.write(newBook);
+            for (String newBook : bookList) { //for every newBook in the bookList array
+                writer.write(newBook); //write the newBook into the book text file
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -302,18 +320,23 @@ public class Library {
 
     /**
      * basically reads the books on the file to be used by the update method below
-     *
+     * https://www.geeksforgeeks.org/java-io-bufferedreader-class-java/#
+     * link for buffered reader class usage
+     * https://www.geeksforgeeks.org/stringbuilder-class-in-java-with-examples/
+     * link for string builder usage
+     * https://www.geeksforgeeks.org/stringbuilder-append-method-in-java-with-examples/
+     * link for .append()
      */
     private List<String> readBookListFromFile() {
         bookList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(bookFile))) {
             String line;
-            StringBuilder bookInfo = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                bookInfo.append(line).append("\n");
-                if (line.isEmpty()) {
-                    bookList.add(bookInfo.toString());
-                    bookInfo.setLength(0);
+            StringBuilder currentBook = new StringBuilder(); //new string builder to store current book
+            while ((line = reader.readLine()) != null) { //make sure the line string is not null
+                currentBook.append(line).append("\n"); //connects current book with line and new line
+                if (line.isEmpty()) { //if line is empty, add current book to line and remove excess space
+                    bookList.add(currentBook.toString().trim());
+                    currentBook.setLength(0); //return currentBook character size back to 0
                 }
             }
         } catch (IOException e) {
@@ -324,27 +347,27 @@ public class Library {
         return bookList;
     }
 
-
-    /**
-     * updates the list of books and prints it to the application
-     */
   /*  private void updateBookList() {
         SwingUtilities.invokeLater(() -> {
             bookString.setListData(bookList.toArray(new String[0]));
         });
     }*/
+
+    /**
+     * updates the list of books and prints it to the application
+     */
     private void updateBookList() {
         SwingUtilities.invokeLater(() -> {
-            List<String> bookTitles = new ArrayList<>();
-            for (String bookInfo : bookList) {
-                String[] lines = bookInfo.split("\n");
+            List<String> bookTitles = new ArrayList<>(); //create new array list for book titles
+            for (String bookInfo : bookList) { //for every bookInfo in the bookList array list
+                String[] lines = bookInfo.split("\n"); //new string[] with book info + new line
                 if (lines.length > 0) {
                     bookTitles.add(lines[0]);
                 }
             }
-            DefaultListModel<String> model = new DefaultListModel<>();
-            model.addAll(bookTitles);
-            bookJList.setModel(model);
+            DefaultListModel<String> model = new DefaultListModel<>(); //new list model
+            model.addAll(bookTitles); //add all book titles to model
+            bookJList.setModel(model); //set model to the JList
         });
     }
 
