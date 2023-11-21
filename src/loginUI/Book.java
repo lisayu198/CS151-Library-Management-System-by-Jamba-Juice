@@ -1,4 +1,4 @@
-package src.loginUI;
+package loginUI;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Book {
-
 
     enum CONDITION {
         NEW, GOOD, FAIR, POOR

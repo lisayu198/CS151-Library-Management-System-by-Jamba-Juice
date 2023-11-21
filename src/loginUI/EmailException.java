@@ -1,4 +1,4 @@
-package src.loginUI;
+package loginUI;
 
 public class EmailException extends Exception {
     public EmailException() {

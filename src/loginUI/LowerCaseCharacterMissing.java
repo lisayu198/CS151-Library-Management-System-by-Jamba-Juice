@@ -1,4 +1,4 @@
-package src.loginUI;
+package loginUI;
 
 public class LowerCaseCharacterMissing extends PasswordException {
     public LowerCaseCharacterMissing() {

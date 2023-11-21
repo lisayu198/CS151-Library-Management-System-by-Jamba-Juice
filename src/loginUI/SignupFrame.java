@@ -1,4 +1,4 @@
-package src.loginUI;
+package loginUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,7 @@ public class SignupFrame extends JFrame implements ActionListener {
             @Override
             public void windowClosing(WindowEvent e) {
                 try {
-                    src.loginUI.WelcomeScreen welcomeScreen = new src.loginUI.WelcomeScreen();
+                    loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -123,13 +123,13 @@ public class SignupFrame extends JFrame implements ActionListener {
             } else {
                 // Create a user object
                 String libraryCardNum = "";
-                src.loginUI.User user = new src.loginUI.User(firstName, lastName, email, password, libraryCardNum);
+                loginUI.User user = new loginUI.User(firstName, lastName, email, password, libraryCardNum);
 
                 // Generate the libraryCardNumber
                 libraryCardNum = Integer.toString((int) (Math.random() * 900000 + 1000));
 
                 // keep regenerating username if already exists
-                while (src.loginUI.WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) != null) {
+                while (loginUI.WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) != null) {
                     libraryCardNum = Integer.toString(((int) (Math.random() * 900000 + 100000)));
                 }
 
@@ -138,9 +138,9 @@ public class SignupFrame extends JFrame implements ActionListener {
 
                 // Add user to HashMap
                 // If user object doesn't exist with email, then add email
-                if (src.loginUI.WelcomeScreen.getUsersEmailDB().get(email) == null) {
-                    src.loginUI.WelcomeScreen.getUsersEmailDB().put(email, user);
-                    src.loginUI.WelcomeScreen.getLibraryCardNumDB().put(user.getLibraryCardNum(), user);
+                if (loginUI.WelcomeScreen.getUsersEmailDB().get(email) == null) {
+                    loginUI.WelcomeScreen.getUsersEmailDB().put(email, user);
+                    loginUI.WelcomeScreen.getLibraryCardNumDB().put(user.getLibraryCardNum(), user);
                 } else {
                     JOptionPane.showMessageDialog(this, "You have an account with that email already, please try log in");
                     return;
@@ -156,7 +156,7 @@ public class SignupFrame extends JFrame implements ActionListener {
                 WelcomeScreen.writeToFile();
 
                 // After user is done, go back to welcome screen
-                src.loginUI.WelcomeScreen welcomeScreen = new src.loginUI.WelcomeScreen();
+                loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
                 dispose();
 
             }
@@ -171,7 +171,7 @@ public class SignupFrame extends JFrame implements ActionListener {
     public boolean isValidEmailAddress(String email) throws Exception {
         Matcher matcher = EMAIL_PATTERN.matcher(email);
         if (!matcher.matches()) {
-            throw new src.loginUI.EmailException();
+            throw new loginUI.EmailException();
         }
         return true;
     }
@@ -180,22 +180,22 @@ public class SignupFrame extends JFrame implements ActionListener {
     public boolean isValidPassword(String password) throws Exception {
         // check if passwords are equal
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
-            throw new src.loginUI.PasswordsNoMatch();
+            throw new loginUI.PasswordsNoMatch();
         }
         if (!password.matches(".*[A-Z].*")) {
-            throw new src.loginUI.UpperCaseCharacterMissing();
+            throw new loginUI.UpperCaseCharacterMissing();
         }
         if (!password.matches(".*[a-z].*")) {
-            throw new src.loginUI.LowerCaseCharacterMissing();
+            throw new loginUI.LowerCaseCharacterMissing();
         }
         if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-            throw new src.loginUI.SpecialCharacterMissing();
+            throw new loginUI.SpecialCharacterMissing();
         }
         if (!password.matches(".*\\d.*")) {
-            throw new src.loginUI.NumberCharacterMissing();
+            throw new loginUI.NumberCharacterMissing();
         }
         if (password.length() < 8) {
-            throw new src.loginUI.Minimum8CharactersRequired();
+            throw new loginUI.Minimum8CharactersRequired();
         }
         return true;
     }

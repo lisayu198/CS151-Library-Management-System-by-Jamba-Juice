@@ -1,10 +1,10 @@
-package src.loginUI;
+package loginUI;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,23 +17,25 @@ public class Library {
     String bookFile = "src/loginUI/Books.txt";
     JFrame libraryFrame = new JFrame("library frame");
     JPanel panel = new JPanel(new GridLayout(1, 2));
-    JButton removeBook = new JButton("removeth thyst books");
+    JButton removeBook = new JButton("remove book");
     ImageIcon userIcon = new ImageIcon("C:\\Users\\anisp\\Downloads\\FreddyFazbear_2__54364.jpg");
     ImageIcon hehe = new ImageIcon("C:\\Users\\anisp\\Downloads\\feeby jumpscare.png");
     Image scale = userIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
     ImageIcon updatedIcon = new ImageIcon(scale);
     JButton userAccount = new JButton(updatedIcon);
-    JLabel titleLabel = new JLabel("list of available bookies");
-    JList<String> bookString;
+    JLabel titleLabel = new JLabel("list of available books");
+    JList<String> bookJList;
 
-    JLabel descriptionLabel = new JLabel("pls enter bok info ty");
+    JLabel descriptionLabel = new JLabel("Enter book info: ");
     JTextField bookInput = new JTextField(20);
     JTextField authorInput = new JTextField(20);
     JTextField isbnInput = new JTextField(20);
+    JComboBox bookCondition = new JComboBox(loginUI.Book.CONDITION.values());
     JLabel bookLabel = new JLabel("book title?");
     JLabel authorLabel = new JLabel("author?");
     JLabel isbnLabel = new JLabel("isbn?");
-    JButton addBook = new JButton("addeth thyst books");
+    JLabel bookConditionLabel = new JLabel("book condition?");
+    JButton addBook = new JButton("add book");
 
     public Library() {
         SwingUtilities.invokeLater(() -> {
@@ -51,24 +53,39 @@ public class Library {
         libraryFrame.setSize(800, 500);
         libraryFrame.setVisible(true);
         libraryFrame.setLocationRelativeTo(null);
-        libraryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        // When you x out the UserFrame, it will go back to welcome screen
+        libraryFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        libraryFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                libraryFrame.dispose();
+            }
+        });
         panel.add(createLibraryPanel());
         panel.add(createBookPanel());
 
-        bookString.addMouseListener(new MouseAdapter() {
+        /**
+         * http://www.java2s.com/Tutorial/Java/0260__Swing-Event/DetectingDoubleandTripleClicks.htm
+         * link for double clicking in Java Swing
+         */
+        bookJList.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    int selectedIndex = bookString.getSelectedIndex();
+            public void mouseClicked(MouseEvent click) {
+                if (click.getClickCount() >= 1) {
+                    int selectedIndex = bookJList.getSelectedIndex();
                     if (selectedIndex != -1) {
-                        showBookDetails(selectedIndex);
+                        JOptionPane.showMessageDialog(libraryFrame, bookList.get(selectedIndex), "book info", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
         });
 
-        userAccount.addActionListener(this::actionPerformed);
+        // userAccount.addActionListener(this::actionPerformed);
         removeBook.addActionListener(this::actionPerformed);
         addBook.addActionListener(this::addBookAction);
     }
@@ -76,7 +93,7 @@ public class Library {
     /**
      * creates the library panel (left)
      */
-    private JPanel createLibraryPanel() {
+    private JPanel createLibraryPanel(){
         JPanel libraryPanel = new JPanel(new GridBagLayout());
         libraryPanel.setBackground(Color.decode("#fec7d7"));
         /**
@@ -96,10 +113,10 @@ public class Library {
         /**
          * working JList for the books
          */
-        bookString = new JList<>();
-        bookString.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        bookString.setLayoutOrientation(JList.VERTICAL);
-        bookString.setVisibleRowCount(10);
+        bookJList = new JList<>();
+        bookJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        bookJList.setLayoutOrientation(JList.VERTICAL);
+        bookJList.setVisibleRowCount(10);
         /**
          * constraints for the list of books
          * setEditable is false so prof can't edit the available books
@@ -113,7 +130,13 @@ public class Library {
         listConstraints.insets = new Insets(10, 10, 10, 10);
         listConstraints.fill = GridBagConstraints.BOTH;
         listConstraints.gridwidth = 8;
-        libraryPanel.add(new JScrollPane(bookString), listConstraints);
+        libraryPanel.add(new JScrollPane(bookJList), listConstraints);
+        // Library bookString: Button only works when a book is selected for library list
+        bookJList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                removeBook.setEnabled(true);
+            }
+        });
         updateBookList(); //prints here
 
         /**
@@ -128,6 +151,7 @@ public class Library {
         libraryPanel.add(addBook, bookButtonConstraints);
         bookButtonConstraints.gridx = GridBagConstraints.RELATIVE;
         libraryPanel.add(removeBook, bookButtonConstraints);
+        removeBook.setEnabled(false);
 
         /**
          * constraints for feeby (might remove, is useless)
@@ -138,7 +162,7 @@ public class Library {
         iconConstraints.anchor = GridBagConstraints.NORTHEAST;
         iconConstraints.insets = new Insets(10, 10, 10, 10);
         userAccount.setPreferredSize(new Dimension(30, 30));
-        libraryPanel.add(userAccount, iconConstraints);
+        // libraryPanel.add(userAccount, iconConstraints);
 
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setForeground(Color.decode("#0e172c"));
@@ -162,6 +186,7 @@ public class Library {
         bookLabel.setLabelFor(bookInput);
         authorLabel.setLabelFor(authorInput);
         isbnLabel.setLabelFor(isbnInput);
+        bookConditionLabel.setLabelFor(bookCondition);
 
         bookConstraints.gridx = 0;
         bookConstraints.gridy = 0;
@@ -200,11 +225,20 @@ public class Library {
         bookPanel.add(isbnInput, bookConstraints);
 
         /**
-         * adding add book button
+         * adding book condition drop down
          */
         bookConstraints.gridx = 1;
+        bookConstraints.gridy = 3;
+        bookPanel.add(bookConditionLabel, bookConstraints);
         bookConstraints.gridy = 4;
-        addBook.setPreferredSize(new Dimension(5, 30));
+        bookPanel.add(bookCondition, bookConstraints);
+
+        /**
+         * adding add book button
+         */
+        bookConstraints.gridx = 0;
+        bookConstraints.gridy = 5;
+        addBook.setPreferredSize(new Dimension(5,30));
         bookPanel.add(addBook, bookConstraints);
 
         return bookPanel;
@@ -213,19 +247,30 @@ public class Library {
     /**
      * method for library panel
      * removes selected book from the JList
+     * https://docs.oracle.com/javase/8/docs/api/javax/swing/DefaultListModel.html
+     * link for DefaultListModel usage
      */
     private void actionPerformed(ActionEvent buttonClicked) {
-        int selectedIndex = bookString.getSelectedIndex();
+        int selectedIndex = bookJList.getSelectedIndex();
 
         if (selectedIndex != -1) {
-            // Remove the selected book information from the bookList
-            bookList.remove(selectedIndex);
+            DefaultListModel<String> model = (DefaultListModel<String>) bookJList.getModel();
+            model.removeElementAt(selectedIndex);
+            String selectedBook = bookList.get(selectedIndex);
+            if(selectedBook != null){
+                bookList.remove(selectedBook);
+            }
 
             // Update the JList to reflect the changes
-            updateBookList();
+            // updateBookList();
         }
+
+
     }
 
+    /**
+     * duplicate code to test methods and implementations
+     */
    /* private void actionPerformed(ActionEvent buttonClicked) {
         String selectedBook = bookString.getSelectedValue();
 
@@ -239,41 +284,48 @@ public class Library {
     /**
      * method for book panel
      * adds a book to JList
+     * retrieves user inputted values (title, author, isbn, condition), and prints all information into Books.txt
+     * and updates the bookList array
      */
     private void addBookAction(ActionEvent buttonClicked) {
         String bookTitle = bookInput.getText();
         String authorName = authorInput.getText();
         String isbn = isbnInput.getText();
+        loginUI.Book.CONDITION condition = (loginUI.Book.CONDITION) bookCondition.getSelectedItem();
 
         if (!bookTitle.isEmpty() && !authorName.isEmpty() && !isbn.isEmpty()) {
-            bookList.add(bookTitle + "\n" + authorName + "\n" + isbn + "\n" + "true\n" + "NEW\n5");
-
+            String newBook = String.format("%s\n%s\n%s\n%s", bookTitle, authorName, isbn, condition);
+            bookList.add(newBook);
             updateBookListFile();
             updateBookList();
         }
     }
 
 
+
     /**
-     * updates the booklist text file with newly added books
+     * updates the book text file with newly added books
+     * https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/#
+     * link for BufferedWriter class
+     * https://www.geeksforgeeks.org/filewriter-class-in-java/
+     * link for FileWriter class
      */
     private void updateBookListFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(bookFile))) {
-            for (String bookInfo : bookList) {
-                writer.write(bookInfo);
-                // writer.newLine();
+            for (String newBook : bookList) {
+                writer.write(newBook);
             }
-            writer.newLine();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(libraryFrame, "Error:" + e.getMessage(),
-                    e.getMessage(), JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(libraryFrame, "Error" + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
 
     /**
-     * booklist.txt is a temp file so I can test to see if it prints. will replace will nelly's book list
      * basically reads the books on the file to be used by the update method below
+     *
      */
     private List<String> readBookListFromFile() {
         bookList = new ArrayList<>();
@@ -284,7 +336,7 @@ public class Library {
                 bookInfo.append(line).append("\n");
                 if (line.isEmpty()) {
                     bookList.add(bookInfo.toString());
-                    bookInfo.setLength(0); // Clear the StringBuilder for the next book
+                    bookInfo.setLength(0);
                 }
             }
         } catch (IOException e) {
@@ -306,15 +358,18 @@ public class Library {
     }*/
     private void updateBookList() {
         SwingUtilities.invokeLater(() -> {
+            DefaultListModel<String> model = new DefaultListModel<>();
             List<String> bookTitles = new ArrayList<>();
             for (String bookInfo : bookList) {
-                // Split the book information by newline and add only the first line (title) to the list
                 String[] lines = bookInfo.split("\n");
                 if (lines.length > 0) {
                     bookTitles.add(lines[0]);
+                    model.addElement(lines[0]);
                 }
             }
-            bookString.setListData(bookTitles.toArray(new String[0]));
+            // DefaultListModel<String> model = new DefaultListModel<>();
+            // model.addAll(bookTitles);
+            bookJList.setModel(model);
         });
     }
 

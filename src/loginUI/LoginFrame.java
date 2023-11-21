@@ -1,4 +1,4 @@
-package src.loginUI;
+package loginUI;
 
 import javax.swing.*;
 import java.awt.*;

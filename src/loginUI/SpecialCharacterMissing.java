@@ -1,4 +1,4 @@
-package src.loginUI;
+package loginUI;
 
 public class SpecialCharacterMissing extends PasswordException {
     public SpecialCharacterMissing() {

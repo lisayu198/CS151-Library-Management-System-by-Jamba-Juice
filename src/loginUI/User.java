@@ -1,4 +1,4 @@
-package src.loginUI;
+package loginUI;
 
 
 import java.util.ArrayList;
@@ -71,13 +71,13 @@ public class User {
 
     // add the new book passed in into the arraylist
     // "checking out a book from the library"
-    public void checkOutBook(Book book) throws UnavailableBookException {
+    public void checkOutBook(Book book) throws loginUI.UnavailableBookException {
         try {
             if (!book.isAvailable()) {
-                throw new UnavailableBookException("Book is not available for check out");
+                throw new loginUI.UnavailableBookException("Book is not available for check out");
             }
             // code to check out the book
-        } catch (UnavailableBookException e) {
+        } catch (loginUI.UnavailableBookException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }

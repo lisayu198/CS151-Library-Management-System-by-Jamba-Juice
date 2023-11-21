@@ -1,4 +1,4 @@
-package src.loginUI;
+package loginUI;
 
 public class Minimum8CharactersRequired extends PasswordException {
     public Minimum8CharactersRequired() {

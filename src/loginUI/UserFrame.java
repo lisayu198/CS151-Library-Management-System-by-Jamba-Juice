@@ -1,9 +1,13 @@
-package src.loginUI;
+package loginUI;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,11 +15,15 @@ public class UserFrame extends JFrame {
     // class variables
     private JLabel firstNameLabel, lastNameLabel, emailLabel, usernameLabel;
     private JTextField firstNameField, lastNameField, emailField, usernameField;
-    private User user;
+    private loginUI.User user;
     JList<String> userCheckoutBookList = new JList<>(new DefaultListModel<>());
     DefaultListModel<String> usersBooksModel = (DefaultListModel<String>) userCheckoutBookList.getModel();
     JList<String> libraryBookList = new JList<>(new DefaultListModel<>());
     DefaultListModel<String> libraryBooksModel = (DefaultListModel<String>) libraryBookList.getModel();
+    // Check in button
+    JButton checkinButton = new JButton("Check in");
+    // checkedout button panel
+    JButton checkOutButton = new JButton("check out");
 
 
     JPanel displayBooksPanel = new JPanel();        // the bookLists panel
@@ -25,12 +33,24 @@ public class UserFrame extends JFrame {
     JPanel bigPanel = new JPanel();                 // big panel
 
     // constructor
-    public UserFrame(User user) {
+    public UserFrame(loginUI.User user) {
         this.user = user;
         this.setTitle("USER PAGE");
 
         this.setSize(new Dimension(800, 500));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // When you x out the UserFrame, it will go back to welcome screen
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                dispose();
+            }
+        });
 
         getUserBookList();          // get borrowed bookList from current user
         getLibraryBooksList();      // get library books
@@ -94,8 +114,8 @@ public class UserFrame extends JFrame {
         logoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    WelcomeScreen.writeToFile();
-                    WelcomeScreen welcomeScreen = new WelcomeScreen();
+                    loginUI.WelcomeScreen.writeToFile();
+                    loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -122,15 +142,22 @@ public class UserFrame extends JFrame {
         libraryBooksPanel.add(new JScrollPane(libraryBookList));
         libraryBooksPanel.add(Box.createHorizontalGlue());
 
+        // Library bookList: Button only works when a book is selected for library list
+        libraryBookList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                checkOutButton.setEnabled(true);
+            }
+        });
+
+
         // Library Button Panel
         JPanel libraryButtonsPanel = new JPanel();
         BoxLayout buttonLayout = new BoxLayout(libraryButtonsPanel, BoxLayout.X_AXIS);
         libraryButtonsPanel.setLayout(buttonLayout);
-        // checkedout button panel
-        JButton checkOutButton = new JButton("check out");
         // Add buttons to buttonsPanel
         libraryButtonsPanel.add(Box.createHorizontalGlue());
         libraryButtonsPanel.add(checkOutButton);
+        checkOutButton.setEnabled(false);
 
         checkOutButton.addActionListener(new ActionListener() {
             @Override
@@ -143,7 +170,7 @@ public class UserFrame extends JFrame {
                     // add book user's checkedout book list
                     usersBooksModel.addElement(bookRemoved);
 
-                    for (Book book : Book.getBooks()) {
+                    for (Book book : loginUI.Book.getBooks()) {
                         if (book.getTitle().equals(bookRemoved)) {
                             UserFrame.this.user.getBorrowedBooks().add(book);
                             break;
@@ -180,13 +207,19 @@ public class UserFrame extends JFrame {
         checkedoutBooksPanel.add(new JScrollPane(userCheckoutBookList));
         checkedoutBooksPanel.add(Box.createHorizontalGlue());
 
+        // Button only works when a book is selected for user BookList
+        userCheckoutBookList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                checkinButton.setEnabled(true);
+            }
+        });
 
         // Button Panel
         JPanel checkedoutBooksButtonsPanel = new JPanel();
         BoxLayout buttonLayout = new BoxLayout(checkedoutBooksButtonsPanel, BoxLayout.X_AXIS);
         checkedoutBooksButtonsPanel.setLayout(buttonLayout);
-        // Check in button
-        JButton checkinButton = new JButton("Check in");
+
+        checkinButton.setEnabled(false);
         // Add buttons to buttonsPanel
         checkedoutBooksButtonsPanel.add(Box.createHorizontalGlue());
         checkedoutBooksButtonsPanel.add(checkinButton);
@@ -201,7 +234,6 @@ public class UserFrame extends JFrame {
                     usersBooksModel.remove(selectedIndex);
                     // add book back to Library (books available)
                     libraryBooksModel.addElement(bookRemoved);
-
                 }
             }
         });
@@ -223,7 +255,7 @@ public class UserFrame extends JFrame {
 
     // Load booklist from library
     public void getLibraryBooksList() {
-        ArrayList<Book> bookList = Book.getBooks();
+        ArrayList<Book> bookList = loginUI.Book.getBooks();
         for (int ii = 0; ii < bookList.size(); ii++) {
             if (!isBookCheckedOut(bookList.get(ii).getTitle())) {
                 libraryBooksModel.addElement(bookList.get(ii).getTitle());
