@@ -58,9 +58,25 @@ public class Book {
         this.author = author;
     }
 
+    public boolean isCheckedIn() {
+        return this.checkedIn;
+    }
+
+    public void setCheckedIn(boolean value) {
+        this.checkedIn = value;
+    }
+
     public static ArrayList<Book> getBooks() {
+        // refresh books available
+        try {
+            BOOKS.clear();
+            Book.populateCatalogue();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         return BOOKS;
     }
+
 
     public static void populateCatalogue() throws Exception {
 
@@ -72,7 +88,16 @@ public class Book {
         while (fileInput.hasNextLine()) {
             Book newBook = new Book();
 
-            newBook.title = fileInput.nextLine();
+            String temp = fileInput.nextLine();
+            if (temp.trim().length() == 0) {
+                // one more empty line
+                if (fileInput.hasNextLine()) {
+                    temp = fileInput.nextLine();
+                } else {
+                    return;
+                }
+            }
+            newBook.title = temp;
 
             newBook.author = fileInput.nextLine();
 
@@ -111,7 +136,7 @@ public class Book {
         }
     }
 */
-    private static void writeToFile() throws IOException {
+    public static void writeToFile() throws IOException {
         File e = new File("src/loginUI/Books.txt");
         PrintWriter out = new PrintWriter(e);
         out.print(writeToFileHelper());

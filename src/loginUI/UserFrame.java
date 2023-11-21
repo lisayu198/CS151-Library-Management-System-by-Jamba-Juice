@@ -8,8 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserFrame extends JFrame {
     // class variables
@@ -24,6 +27,8 @@ public class UserFrame extends JFrame {
     JButton checkinButton = new JButton("Check in");
     // checkedout button panel
     JButton checkOutButton = new JButton("check out");
+    String bookFile = "src/loginUI/Books.txt";
+    List<String> bookInfoList = new ArrayList<>();
 
 
     JPanel displayBooksPanel = new JPanel();        // the bookLists panel
@@ -115,6 +120,7 @@ public class UserFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     loginUI.WelcomeScreen.writeToFile();
+                    loginUI.Book.writeToFile();
                     loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -143,9 +149,17 @@ public class UserFrame extends JFrame {
         libraryBooksPanel.add(Box.createHorizontalGlue());
 
         // Library bookList: Button only works when a book is selected for library list
+        // make the books info list for display
+        bookInfoList = this.readBookListFromFile();
         libraryBookList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 checkOutButton.setEnabled(true);
+                for (String value : bookInfoList) {
+                    if (value != null && libraryBookList.getSelectedValue() != null &&
+                            value.startsWith(libraryBookList.getSelectedValue())) {
+                        JOptionPane.showMessageDialog(UserFrame.this, value, "book info", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
             }
         });
 
@@ -174,6 +188,7 @@ public class UserFrame extends JFrame {
 
                     for (Book book : loginUI.Book.getBooks()) {
                         if (book.getTitle().equals(bookRemoved)) {
+                            book.setCheckedIn(false);
                             UserFrame.this.user.getBorrowedBooks().add(book);
                             break;
                         }
@@ -237,11 +252,12 @@ public class UserFrame extends JFrame {
                     userCheckoutBookList.updateUI();
                     for (Book book : loginUI.Book.getBooks()) {
                         if (book.getTitle().equals(bookRemoved)) {
+                            book.setCheckedIn(true);
                             UserFrame.this.user.getBorrowedBooks().remove(book);
                             break;
                         }
                     }
-                    
+
                     checkinButton.setEnabled(false);
                     // add book back to Library (books available)
                     libraryBooksModel.addElement(bookRemoved);
@@ -267,11 +283,43 @@ public class UserFrame extends JFrame {
     // Load booklist from library
     public void getLibraryBooksList() {
         ArrayList<Book> bookList = loginUI.Book.getBooks();
+        libraryBooksModel.clear();
         for (int ii = 0; ii < bookList.size(); ii++) {
-            if (!isBookCheckedOut(bookList.get(ii).getTitle())) {
+            if (!isBookCheckedOut(bookList.get(ii).getTitle()) && bookList.get(ii).isCheckedIn()) {
                 libraryBooksModel.addElement(bookList.get(ii).getTitle());
             }
         }
+    }
+
+
+    /**
+     * basically reads the books on the file to be used by the update method below
+     */
+    private List<String> readBookListFromFile() {
+        List<String> bookList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(bookFile))) {
+            String line;
+            StringBuilder bookInfo = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                bookInfo.append(line).append("\n");
+                if (line.isEmpty()) {
+                    bookList.add(bookInfo.toString());
+                    bookInfo.setLength(0);
+                }
+            }
+
+            // Add the last one if not added
+            if (bookInfo.length() != 0) {
+                bookList.add(bookInfo.toString());
+                bookInfo.setLength(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return bookList;
     }
 
     private boolean isBookCheckedOut(String bookName) {

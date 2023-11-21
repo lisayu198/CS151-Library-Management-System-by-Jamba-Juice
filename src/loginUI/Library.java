@@ -76,10 +76,12 @@ public class Library {
         bookJList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent click) {
-                if (click.getClickCount() >= 1) {
-                    int selectedIndex = bookJList.getSelectedIndex();
-                    if (selectedIndex != -1) {
-                        JOptionPane.showMessageDialog(libraryFrame, bookList.get(selectedIndex), "book info", JOptionPane.INFORMATION_MESSAGE);
+                if (click.getClickCount() >= -1) {
+                    for (String value : bookList) {
+                        if (value != null && bookJList.getSelectedValue() != null &&
+                                value.startsWith(bookJList.getSelectedValue())) {
+                            JOptionPane.showMessageDialog(libraryFrame, value, "book info", JOptionPane.INFORMATION_MESSAGE);
+                        }
                     }
                 }
             }

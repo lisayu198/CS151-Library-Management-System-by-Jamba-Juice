@@ -1,21 +1,21 @@
 Little Women
 Louisa May Alcott
 9788809970762
-true
+false
 GOOD
 1
 
 The Very Hungry Caterpillar
 Eric Carl
 9780140569322
-true
+false
 NEW
 1
 
 Twilight
 Stephenie Meyer
 9780316038379
-true
+false
 GOOD
 1
 
@@ -78,7 +78,7 @@ POOR
 The Hobbit
 J.R.R. Tolkien
 9780261102217
-true
+false
 FAIR
 1
 
@@ -92,7 +92,7 @@ NEW
 Life of Pi
 Yann Martel
 9780156027328
-true
+false
 NEW
 1
 
@@ -103,11 +103,10 @@ true
 NEW
 1
 
-abcd
-abcde
-12345
+Animal Farm
+George Orswell
+45182741892734
+true
 NEW
-sdfdsafdsa
-dsfdsaf
-43445
-NEW
+1
+

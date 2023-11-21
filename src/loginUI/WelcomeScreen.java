@@ -116,19 +116,23 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         // Read from backend database file
         File file = new File("src/loginUI/Users.txt");
 
-        Scanner scanner = new Scanner(file);
-        if (scanner.hasNextLine()) {
-            String firstLine = scanner.nextLine();
-            System.out.println("First line: " + firstLine);
-        } else {
-            System.out.println("The file is empty.");
-        }
-        scanner.close();
+//        Scanner scanner = new Scanner(file);
+//        if (scanner.hasNextLine()) {
+//            String firstLine = scanner.nextLine();
+//            System.out.println("First line: " + firstLine);
+//        } else {
+//            System.out.println("The file is empty.");
+//        }
+//        scanner.close();
 
         Scanner fileInput = new Scanner(file);
         while (fileInput.hasNextLine()) {
+            String temp = fileInput.nextLine();
+            if (temp.trim().length() == 0) {
+                break;  // just empty lines; no more record
+            }
             loginUI.User newUser = new loginUI.User();
-            newUser.setFirstName(fileInput.nextLine());
+            newUser.setFirstName(temp);
             System.out.println("firstname " + newUser.getFirstName());
             newUser.setLastName(fileInput.nextLine());
             System.out.println("lastname " + newUser.getLastName());
