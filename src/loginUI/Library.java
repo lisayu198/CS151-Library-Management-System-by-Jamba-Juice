@@ -255,16 +255,12 @@ public class Library {
     private void actionPerformed(ActionEvent buttonClicked) {
         int selectedIndex = bookJList.getSelectedIndex();
 
+        // JList has a model that you use to update/maintain the contents of a JList
         if (selectedIndex != -1) {
             DefaultListModel<String> model = (DefaultListModel<String>) bookJList.getModel();
             model.removeElementAt(selectedIndex);
-            String selectedBook = bookList.get(selectedIndex);
-            if (selectedBook != null) {
-                bookList.remove(selectedBook);
-            }
-
-            // Update the JList to reflect the changes
-            // updateBookList();
+            bookList.remove(selectedIndex);
+            updateBookListFile();
         }
 
 
@@ -321,7 +317,7 @@ public class Library {
             for (String newBook : bookList) {
                 writer.write(newBook);
             }
-            writer.write("\n");
+            //writer.write("\n");
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(libraryFrame, "Error" + e.getMessage(),

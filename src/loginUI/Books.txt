@@ -15,7 +15,7 @@ NEW
 Twilight
 Stephenie Meyer
 9780316038379
-true
+false
 GOOD
 1
 
@@ -54,17 +54,10 @@ true
 FAIR
 1
 
-The Hunger Games
-Suzzane Collins
-9780545791878
-true
-NEW
-1
-
 The Fault in Our Stars
 John Green
 9780143567592
-true
+false
 GOOD
 1
 
@@ -78,7 +71,7 @@ POOR
 The Hobbit
 J.R.R. Tolkien
 9780261102217
-true
+false
 FAIR
 1
 
@@ -108,5 +101,26 @@ George Orswell
 45182741892734
 true
 NEW
+1
+
+italkinmemes
+toshi bhat
+80085
+true
+FAIR
+1
+
+Animal Farm
+aaa
+4456790
+true
+FAIR
+1
+
+Snoopy
+dog
+1234567890
+true
+GOOD
 1
 

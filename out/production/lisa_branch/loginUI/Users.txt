@@ -3,7 +3,6 @@ Runner
 rr@gmail.com
 Password1!
 328759
-9780316038379
 
 Maria
 Belmont
@@ -11,8 +10,6 @@ mb@gmail.com
 Password1!
 19897
 9788809970762
-9780140569322
-9780261102217
 
 Lisa
 Yu
@@ -20,4 +17,11 @@ ly@gmail.com
 Password1!
 19834
 9780156027328
+
+Jess
+Fung
+fj@gmail.com
+Password1!
+287849
+9780316038379
 

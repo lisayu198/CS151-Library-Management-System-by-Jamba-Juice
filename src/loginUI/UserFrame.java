@@ -43,17 +43,12 @@ public class UserFrame extends JFrame {
         this.setTitle("USER PAGE");
 
         this.setSize(new Dimension(800, 500));
-        // When you x out the UserFrame, it will go back to welcome screen
+        // When you x out the UserFrame, it will go back to welcome screen and write to file
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                try {
-                    loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                dispose();
+                userLogout();
             }
         });
 
@@ -118,18 +113,24 @@ public class UserFrame extends JFrame {
         userInfoPanel.add(logoutButton);
         logoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try {
-                    loginUI.WelcomeScreen.writeToFile();
-                    loginUI.Book.writeToFile();
-                    loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                dispose();
+                userLogout();
             }
         });
 
     }
+
+    // Logout and WritetoFile method
+    public void userLogout() {
+        try {
+            loginUI.WelcomeScreen.writeToFile();
+            loginUI.Book.writeToFile();
+            loginUI.WelcomeScreen welcomeScreen = new loginUI.WelcomeScreen();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        dispose();
+    }
+
 
     // Build libraryBooks contents
     public void buildLibraryBooksPanel() {
@@ -187,13 +188,14 @@ public class UserFrame extends JFrame {
                     checkOutButton.setEnabled(false);
 
                     for (Book book : loginUI.Book.getBooks()) {
-                        if (book.getTitle().equals(bookRemoved)) {
+                        if (book.getTitle().equalsIgnoreCase(bookRemoved)) {
                             book.setCheckedIn(false);
                             UserFrame.this.user.getBorrowedBooks().add(book);
                             break;
                         }
                     }
                 }
+
             }
         });
 
@@ -241,21 +243,27 @@ public class UserFrame extends JFrame {
         checkedoutBooksButtonsPanel.add(Box.createHorizontalGlue());
         checkedoutBooksButtonsPanel.add(checkinButton);
 
+        // Check in button actionListener
         checkinButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = userCheckoutBookList.getSelectedIndex();
                 if (selectedIndex != -1) {
+                    //System.out.println("IN THE FOR LOOP");
                     String bookRemoved = usersBooksModel.getElementAt(selectedIndex);
                     // remove checkedIn book from user's bookList
                     usersBooksModel.remove(selectedIndex);
                     userCheckoutBookList.updateUI();
-                    for (Book book : loginUI.Book.getBooks()) {
-                        if (book.getTitle().equals(bookRemoved)) {
+                    for (Book book : Book.BOOKS) {
+                        if (book.getTitle().equalsIgnoreCase(bookRemoved.trim())) {
+                           // System.out.println("IN THE GET TITLE MATCHING LOOP");
                             book.setCheckedIn(true);
                             UserFrame.this.user.getBorrowedBooks().remove(book);
                             break;
                         }
+                    }
+                    for(int k = 0; k < UserFrame.this.user.getBorrowedBooks().size(); k++){
+                        System.out.println("THIS IS THE ONE" + UserFrame.this.user.getBorrowedBooks().get(k).getTitle());
                     }
 
                     checkinButton.setEnabled(false);
