@@ -26,4 +26,13 @@ Status of book: Checked in/ Checked out
 Amount of books the library has
 Condition of book: new, good, fair, poor
 
+Login:
+(Pre-existing user)
+- User: 19897
+- Password: Password1!
+
+Login into Library database to add/remove books in library (same login page as user):
+- User: Librarian
+- Password: librarian123!
+
 *UML diagrams are in the Diagrams branch*
