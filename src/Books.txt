@@ -43,7 +43,7 @@ POOR
 Goodnight Moon
 Margret Wise Brown
 9780061119774
-false
+true
 FAIR
 1
 
@@ -71,7 +71,7 @@ POOR
 The Hobbit
 J.R.R. Tolkien
 9780261102217
-true
+false
 FAIR
 1
 
@@ -110,9 +110,3 @@ true
 FAIR
 1
 
-Animal Farm
-aaa
-4456790
-true
-FAIR
-1

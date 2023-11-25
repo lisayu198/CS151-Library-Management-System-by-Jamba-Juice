@@ -215,7 +215,6 @@ public class UserFrame extends JFrame {
     }
 
 
-
     // Build checkedoutBooks contents
     public void buildCheckedoutBooksPanel() {
         BoxLayout layout = new BoxLayout(checkedoutBooksPanel, BoxLayout.Y_AXIS);
@@ -267,7 +266,7 @@ public class UserFrame extends JFrame {
                     for (Book book : Book.BOOKS) {
                         if (book.getTitle().equalsIgnoreCase(bookRemoved.trim())) {
                             book.setCheckedIn(true);
-                            UserFrame.this.user.getBorrowedBooks().remove(book);
+                            UserFrame.this.user.getBorrowedBooks().remove(selectedIndex);
                             break;
                         }
                     }
