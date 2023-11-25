@@ -8,24 +8,31 @@ import static junit.framework.TestCase.*;
 
 public class UnitTesting {
 
-    Library newLibrary = new Library();
-    User newUser;
-    Book newBook;
+    Library newLibrary = new Library(); //create new library object
+    User newUser; //create new user object
+    Book newBook; //create new book object
 
+    /**
+     * JUnit to test the addBook method in the Library class
+     */
     @Test
     public void testAddBook(){
-        assertEquals(0, newLibrary.bookList.size());
+        assertEquals(0, newLibrary.bookList.size()); //make sure the array list is empty
 
-        newLibrary.bookInput.setText("book test");
-        newLibrary.authorInput.setText("author test");
-        newLibrary.isbnInput.setText("80085");
-        newLibrary.bookCondition.setSelectedItem(Book.CONDITION.FAIR);
+        newLibrary.bookInput.setText("book test"); //tester book title
+        newLibrary.authorInput.setText("author test"); //tester author name
+        newLibrary.isbnInput.setText("80085"); //tester isbn
+        newLibrary.bookCondition.setSelectedItem(Book.CONDITION.FAIR); //tester book condition
 
-        newLibrary.addBookAction(null);
+        newLibrary.addBookAction(null); //call the addBookAction method (null b/c no need for click sensor)
 
-        assertEquals(1, newLibrary.bookList.size());
+        assertEquals(1, newLibrary.bookList.size()); //make sure the array list has the tester book info
 
-        String testMethod = newLibrary.bookList.get(0);
+        String testMethod = newLibrary.bookList.get(0); //new string to store the first value of the book list
+
+        /**
+         * assertTrue() makes sure the testMethod string has all the tester inputs
+         */
         assertTrue(testMethod.contains("book test"));
         assertTrue(testMethod.contains("author test"));
         assertTrue(testMethod.contains("80085"));
@@ -33,7 +40,7 @@ public class UnitTesting {
     }
 
     @Test
-    public void testCheckOutBook() throws UnavailableBookException {
+    public void testCheckOutBook() {
         newUser = new User("test", "user", "testuser@HAHA.com", "Hello123!", "80085");
         newBook = new Book("how to survive 5 nights at freddy's", 8008135L, "josh hutcherson", Book.CONDITION.GOOD, false, 5);
         Book takenBook = new Book("how to not survive 5 nights at freddy's", 9012355L, "william afton", Book.CONDITION.POOR, true, 1);
@@ -61,6 +68,23 @@ public class UnitTesting {
         } catch (IOException e) {
             fail("populate failed" + e.getMessage());
         }
+    }
+
+    @Test
+    public void testWriteToFile(){
+        try{
+            newBook.populateCatalogue();
+            Book.writeToFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void testCompare(){
+        Book compareBook = new Book("fortnite battle royale", 69420L, "epic games", Book.CONDITION.GOOD, true, 2);
+        assertEquals(0, Book.compare(compareBook, "fortnite battle royale"));
+        assertEquals(-1, Book.compare(compareBook, "minecraft best game"));
     }
 
 }

@@ -111,7 +111,7 @@ public class Book {
         }
     }
 */
-    private static void writeToFile() throws IOException {
+    static void writeToFile() throws IOException {
         File e = new File("outFileBooks.txt");
         PrintWriter out = new PrintWriter(e);
         out.print(writeToFileHelper());
