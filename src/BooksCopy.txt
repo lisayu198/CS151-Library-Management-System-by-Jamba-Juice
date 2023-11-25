@@ -43,7 +43,7 @@ POOR
 Goodnight Moon
 Margret Wise Brown
 9780061119774
-true
+false
 FAIR
 1
 
@@ -57,7 +57,7 @@ FAIR
 The Fault in Our Stars
 John Green
 9780143567592
-false
+true
 GOOD
 1
 
@@ -71,7 +71,7 @@ POOR
 The Hobbit
 J.R.R. Tolkien
 9780261102217
-false
+true
 FAIR
 1
 
@@ -99,13 +99,13 @@ NEW
 Animal Farm
 George Orswell
 45182741892734
-false
+true
 NEW
 1
 
 italkinmemes
 toshi bhat
-80085
+80085438572387
 true
 FAIR
 1
@@ -116,4 +116,3 @@ aaa
 true
 FAIR
 1
-
