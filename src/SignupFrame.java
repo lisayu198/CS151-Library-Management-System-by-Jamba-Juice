@@ -41,6 +41,7 @@ public class SignupFrame extends JFrame implements ActionListener {
         });
 
         this.buildContent();        // build the content inside the Signup JFrame
+        this.setResizable(false);
 
         setLocationRelativeTo(null);    // center the JFrame on the screen
         setVisible(true);               // Show the Signup JFrame
@@ -72,7 +73,7 @@ public class SignupFrame extends JFrame implements ActionListener {
 
         // emailField label
         emailLabel = new JLabel("Email: ");
-        emailLabel.setBounds(150, 102 , 100, 20);
+        emailLabel.setBounds(150, 102, 100, 20);
         panel.add(emailLabel);
 
         // emailField text field
@@ -82,7 +83,7 @@ public class SignupFrame extends JFrame implements ActionListener {
 
         // passwordField label
         passwordLabel = new JLabel("Password: ");
-        passwordLabel.setBounds(150, 149 , 100, 20);
+        passwordLabel.setBounds(150, 149, 100, 20);
         panel.add(passwordLabel);
 
         // passwordField field
@@ -121,12 +122,19 @@ public class SignupFrame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Please enter valid information");
             } else {
                 // Create a user object
-                int libraryCardNum = 0;
+                String libraryCardNum = "";
                 User user = new User(firstName, lastName, email, password, libraryCardNum);
 
                 // Generate the libraryCardNumber
-                //libraryCardNum = (int) (Math.random() * 9000 + 1000);
+                libraryCardNum = Integer.toString((int) (Math.random() * 900000 + 1000));
 
+                // keep regenerating username if already exists
+                while (WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) != null) {
+                    libraryCardNum = Integer.toString(((int) (Math.random() * 900000 + 100000)));
+                }
+
+                // Set library card number for user
+                user.setLibraryCardNum(libraryCardNum);
 
                 // Add user to HashMap
                 // If user object doesn't exist with email, then add email
@@ -138,18 +146,14 @@ public class SignupFrame extends JFrame implements ActionListener {
                     return;
                 }
 
-                // keep regenerating username if already exists
-                while (WelcomeScreen.getLibraryCardNumDB().get(libraryCardNum) != null) {
-                    libraryCardNum = ((int) (Math.random() * 900000 + 100000));
-                    user.setLibraryCardNum(libraryCardNum);
-                }
-                // Set library card number for user
-                user.setLibraryCardNum((libraryCardNum));
-                WelcomeScreen.getLibraryCardNumDB().put(libraryCardNum, user);
-
-
                 // Show username to user
-                JOptionPane.showMessageDialog(this, "Your username is: " + libraryCardNum);
+                try {
+                    JOptionPane.showMessageDialog(this, "Your username is: " + libraryCardNum);
+                } catch (Exception ex) {
+
+                }
+
+                WelcomeScreen.writeToFile();
 
                 // After user is done, go back to welcome screen
                 WelcomeScreen welcomeScreen = new WelcomeScreen();
@@ -166,7 +170,7 @@ public class SignupFrame extends JFrame implements ActionListener {
     // validate email address
     public boolean isValidEmailAddress(String email) throws Exception {
         Matcher matcher = EMAIL_PATTERN.matcher(email);
-        if(!matcher.matches()) {
+        if (!matcher.matches()) {
             throw new EmailException();
         }
         return true;
@@ -174,26 +178,26 @@ public class SignupFrame extends JFrame implements ActionListener {
 
     // validate password
     public boolean isValidPassword(String password) throws Exception {
-            // check if passwords are equal
-            if(!passwordField.getText().equals(confirmPasswordField.getText())) {
-                throw new PasswordsNoMatch();
-            }
-            if(!password.matches(".*[A-Z].*")) {
-                throw new UpperCaseCharacterMissing();
-            }
-            if(!password.matches(".*[a-z].*")) {
-                throw new LowerCaseCharacterMissing();
-            }
-            if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
-                throw new SpecialCharacterMissing();
-            }
-            if (!password.matches(".*\\d.*")) {
-                throw new NumberCharacterMissing();
-            }
-            if (password.length() < 8) {
-                throw new Minimum8CharactersRequired();
-            }
-            return true;
+        // check if passwords are equal
+        if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+            throw new PasswordsNoMatch();
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            throw new UpperCaseCharacterMissing();
+        }
+        if (!password.matches(".*[a-z].*")) {
+            throw new LowerCaseCharacterMissing();
+        }
+        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+            throw new SpecialCharacterMissing();
+        }
+        if (!password.matches(".*\\d.*")) {
+            throw new NumberCharacterMissing();
+        }
+        if (password.length() < 8) {
+            throw new Minimum8CharactersRequired();
+        }
+        return true;
     }
 
 }

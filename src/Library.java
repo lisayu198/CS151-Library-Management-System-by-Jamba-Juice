@@ -15,38 +15,38 @@ public class Library {
     /**
      * library panel UI
      */
-    String[] array = new String[20];
-    private List<String> bookList;
-    String bookFile = "Books.txt";
-    JFrame libraryFrame = new JFrame("library frame");
-    JPanel panel = new JPanel(new GridLayout(1, 2));
-    JButton removeBook = new JButton("removeth thyst books");
+    String[] array = new String[20]; //new string[] array (unused)
+    List<String> bookList; //new private List with String parameter for books
+    String bookFile = "Books.txt"; //new string for book text file (file directory)
+    JFrame libraryFrame = new JFrame("library frame"); //JFrame for library frame
+    JPanel panel = new JPanel(new GridLayout(1, 2)); //main JPanel to store both library and book panel
+    JButton removeBook = new JButton("removeth thyst books"); //JButton for removing a book
     //ImageIcon userIcon = new ImageIcon("C:\\Users\\anisp\\Downloads\\FreddyFazbear_2__54364.jpg");
     //ImageIcon hehe = new ImageIcon("C:\\Users\\anisp\\Downloads\\feeby jumpscare.png");
     //Image scale = userIcon.getImage().getScaledInstance(30,30, Image.SCALE_SMOOTH);
     //ImageIcon updatedIcon = new ImageIcon(scale);
     //JButton userAccount = new JButton(updatedIcon);
-    JLabel titleLabel = new JLabel("list of available bookies");
-    JList<String> bookJList;
+    JLabel titleLabel = new JLabel("list of available bookies"); //JLabel for the library panel description
+    JList<String> bookJList; //JList with string parameter for the books
 
     /**
      * book panel UI
      */
-    JLabel descriptionLabel = new JLabel("pls enter bok info ty");
-    JTextField bookInput = new JTextField(20);
-    JTextField authorInput = new JTextField(20);
-    JTextField isbnInput = new JTextField(20);
-    JComboBox bookCondition = new JComboBox(Book.CONDITION.values());
-    JLabel bookLabel = new JLabel("book title?");
-    JLabel authorLabel = new JLabel("author?");
-    JLabel isbnLabel = new JLabel("isbn?");
-    JLabel bookConditionLabel = new JLabel("book condition?");
-    JButton addBook = new JButton("addeth thyst books");
+    JLabel descriptionLabel = new JLabel("pls enter bok info ty"); //JLabel for book panel description
+    JTextField bookInput = new JTextField(20); //text field for inputting book title
+    JTextField authorInput = new JTextField(20); //text field for inputting author name
+    JTextField isbnInput = new JTextField(20); //text field for inputting book isbn
+    JComboBox bookCondition = new JComboBox(Book.CONDITION.values()); //drop down for book condition
+    JLabel bookLabel = new JLabel("book title?"); //JLabel for book title
+    JLabel authorLabel = new JLabel("author?"); //JLabel for author name
+    JLabel isbnLabel = new JLabel("isbn?"); //JLabel for book isbn
+    JLabel bookConditionLabel = new JLabel("book condition?"); //JLabel for book condition drop down
+    JButton addBook = new JButton("addeth thyst books"); //button for adding a book
 
     /**
      * https://www.javamex.com/tutorials/threads/invokelater.shtml
      * link for SwingUtilities.invokeLater
-     * calls libraryUI first, then readBookListFromFile, then updateBookList
+     * calls libraryUI method first, then readBookListFromFile, then updateBookList
      */
     public Library(){
         SwingUtilities.invokeLater(() -> {
@@ -59,49 +59,50 @@ public class Library {
 
     /**
      * main frame UI method
+     * creates the library frame and adds the library and book panel to the frame
      */
     public void LibraryUI(){
-        bookList = readBookListFromFile();
+        bookList = readBookListFromFile(); //book list array calls the readBookListFromFile method
 
-        libraryFrame.add(panel);
-        libraryFrame.setSize(800,500);
-        libraryFrame.setVisible(true);
-        libraryFrame.setLocationRelativeTo(null);
-        libraryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        libraryFrame.add(panel); //add main to library frame
+        libraryFrame.setSize(800,500); //set the library frame to 800x500
+        libraryFrame.setVisible(true); //make sure library frame is visible
+        libraryFrame.setLocationRelativeTo(null); //make library frame open in the middle of computer screen instead of the corner
+        libraryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //library frame closes but application does not close
 
-        panel.add(createLibraryPanel());
-        panel.add(createBookPanel());
+        panel.add(createLibraryPanel()); //call createLibraryPanel method and add it to the main panel
+        panel.add(createBookPanel()); //call createBookPanel method and add it to the main panel
 
         /**
          * http://www.java2s.com/Tutorial/Java/0260__Swing-Event/DetectingDoubleandTripleClicks.htm
          * link for double clicking in Java Swing
          */
-        bookJList.addMouseListener(new MouseAdapter() {
+        bookJList.addMouseListener(new MouseAdapter() { //add mouse listener to the JList object
             @Override
-            public void mouseClicked(MouseEvent click) {
-                if (click.getClickCount() == 2) { //double click
+            public void mouseClicked(MouseEvent click) { //create mouseclick event
+                if (click.getClickCount() == 2) { //check for double click
                     int selectedIndex = bookJList.getSelectedIndex(); //which book in JList is selected
                     System.out.println(selectedIndex); //debug
                     if (selectedIndex != -1) { //make sure its not >0
                         String bookTitle = bookList.get(selectedIndex); //retrieves matching book from bookList array
                         System.out.println(bookTitle); //debug
-                        JOptionPane.showMessageDialog(libraryFrame, bookTitle, "book info", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(libraryFrame, bookTitle, "book info", JOptionPane.INFORMATION_MESSAGE); //JOptionPane that shows the book's information
                     }
                 }
             }
         });
 
-        //userAccount.addActionListener(this::actionPerformed);
-        removeBook.addActionListener(this::actionPerformed);
-        addBook.addActionListener(this::addBookAction);
+        //userAccount.addActionListener(this::actionPerformed); (don't worry about this professor)
+        removeBook.addActionListener(this::actionPerformed); //add action listener to the remove book button
+        addBook.addActionListener(this::addBookAction); //add action listener to the add book button
     }
 
     /**
-     * creates the library panel (left)
+     * creates the library panel (left) with constraints for all J components
      */
     private JPanel createLibraryPanel(){
-        JPanel libraryPanel = new JPanel(new GridBagLayout());
-        libraryPanel.setBackground(Color.decode("#fec7d7"));
+        JPanel libraryPanel = new JPanel(new GridBagLayout()); //create new JPanel for library panel with GridBagLayout
+        libraryPanel.setBackground(Color.decode("#fec7d7")); //sets the background colour to light pink
         /**
          * this is constraints for the header
          * insets is basically like a spacer/margins
@@ -111,18 +112,18 @@ public class Library {
         GridBagConstraints textConstraints = new GridBagConstraints();
         textConstraints.gridx = 0;
         textConstraints.gridy = 0;
-        textConstraints.insets = new Insets(10,60,10,10);
-        textConstraints.fill = GridBagConstraints.HORIZONTAL;
-        textConstraints.gridwidth = 5;
-        libraryPanel.add(titleLabel, textConstraints);
+        textConstraints.insets = new Insets(10,60,10,10); //creates spacers
+        textConstraints.fill = GridBagConstraints.HORIZONTAL; //fills the constraints on the x-axis
+        textConstraints.gridwidth = 5; //sets how wide the constraints are
+        libraryPanel.add(titleLabel, textConstraints); //adds the label with the constraints to the library panel
 
         /**
          * working JList for the books
          */
-        bookJList = new JList<>();
-        bookJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        bookJList.setLayoutOrientation(JList.VERTICAL);
-        bookJList.setVisibleRowCount(10);
+        bookJList = new JList<>(); //establish bookJList as JList
+        bookJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); //set the selection mode to single selection only
+        bookJList.setLayoutOrientation(JList.VERTICAL); //set the JList to vertical (scroll up/down)
+        bookJList.setVisibleRowCount(10); //set visible row count to 10 at a time
         /**
          * constraints for the list of books
          * setEditable is false so prof can't edit the available books
@@ -226,7 +227,7 @@ public class Library {
         /**
          * adding book condition drop down
          * https://stackoverflow.com/questions/1459069/populating-swing-jcombobox-from-enum
-         * link for how to use jcombobox with enums
+         * link for how to use JComboBox with enums
          */
         bookConstraints.gridx = 1;
         bookConstraints.gridy = 3;
@@ -255,9 +256,9 @@ public class Library {
         int selectedIndex = bookJList.getSelectedIndex();
         if (selectedIndex != -1) {
             DefaultListModel<String> model = (DefaultListModel<String>) bookJList.getModel(); //default list model to remove books from JList
-            model.removeElementAt(selectedIndex);
-            bookList.remove(selectedIndex);
-            updateBookListFile();
+            model.removeElementAt(selectedIndex); //removes the book at selected index from JList
+            bookList.remove(selectedIndex); //removes the same book from the array list
+            updateBookListFile(); //updates the book text file
         }
     }
 
@@ -282,7 +283,7 @@ public class Library {
      * retrieves user inputted values (title, author, isbn, condition), and prints all information into Books.txt
      * and updates the bookList array
      */
-    private void addBookAction(ActionEvent buttonClicked) {
+    void addBookAction(ActionEvent buttonClicked) {
         String bookTitle = bookInput.getText();
         String authorName = authorInput.getText();
         String isbn = isbnInput.getText();

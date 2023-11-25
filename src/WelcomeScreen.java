@@ -109,7 +109,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
                // System.out.println("firstname " + newUser.setFirstName(););
                 newUser.setLastName(fileInput.nextLine());
               //  System.out.println("lastname " + newUser.lastName);
-                newUser.setLibraryCardNum(Integer.parseInt(fileInput.nextLine()));
+                newUser.setLibraryCardNum(String.valueOf(Integer.parseInt(fileInput.nextLine())));
               //  System.out.println("librarynum " + newUser.libraryCardNum);
                 fileInput.nextLine();
              //   newUser.setPhoneNum(fileInput.nextLong());
@@ -127,7 +127,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
                     //System.out.println(Book.BOOKS.get(key));
                     for (int k = 0; k < Book.BOOKS.size(); k++){
                         if(Book.BOOKS.get(k).getIsbn() == a){
-                            newUser.borrowedBooks.add(Book.BOOKS.get(k));
+                            newUser.getBorrowedBooks().add(Book.BOOKS.get(k));
                         }
                     }
                    // System.out.println(Book.BOOKS.get(key));
@@ -151,7 +151,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
             a.append(libraryCardMap.get(i).getLastName() + "\n");
             a.append(libraryCardMap.get(i).getLibraryCardNum() + "\n");
            // a.append(libraryCardMap.get(i).phoneNum + "\n");
-            for (Book J : libraryCardMap.get(i).borrowedBooks) {
+            for (Book J : libraryCardMap.get(i).getBorrowedBooks()) {
                 a.append(J.getIsbn() + "\n");
             }
             a.append("\n");

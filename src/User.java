@@ -7,13 +7,15 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String userid;
     private String password;
-    private int libraryCardNum;
-    // int libraryCardNum;
-    ArrayList<Book> borrowedBooks;
+    private String libraryCardNum;
+    private ArrayList<Book> borrowedBooks;
 
 
-    public User(String firstName, String lastName, String email, String password, int libraryCardNum) {
+    public User(String firstName, String lastName, String email, String password, String libraryCardNum) {
+        super();
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -22,7 +24,7 @@ public class User {
     }
 
     public User() {
-
+        this.borrowedBooks = new ArrayList<>();
     }
 
     // Getters and setters
@@ -59,26 +61,26 @@ public class User {
     }
 
 
-
-    public int getLibraryCardNum() {
-        return libraryCardNum;
+    public Integer getLibraryCardNum() {
+        return Integer.valueOf(libraryCardNum);
     }
 
-    public void setLibraryCardNum(int nextInt) {
+    public void setLibraryCardNum(String num) {
+        this.libraryCardNum = num;
     }
 
     // add the new book passed in into the arraylist
     // "checking out a book from the library"
-//    public void checkOutBook(Book book) throws UnavailableBookException {
-//        try {
-//            if (!book.isAvailable()) {
-//                throw new UnavailableBookException("Book is not available for check out");
-//            }
-//            // code to check out the book
-//        } catch (UnavailableBookException e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
-//    }
+    public void checkOutBook(Book book) throws src.UnavailableBookException {
+        try {
+            if (!book.isAvailable()) {
+                throw new src.UnavailableBookException("Book is not available for check out");
+            }
+            // code to check out the book
+        } catch (src.UnavailableBookException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
     // remove book that is returned
     // "returning a book back to the library"
@@ -86,15 +88,21 @@ public class User {
         list.remove(book);
     }
 
+    public ArrayList<Book> getBorrowedBooks() {
+        if (this.borrowedBooks == null) {
+            this.borrowedBooks = new ArrayList<>();
+        }
+        return this.borrowedBooks;
+    }
+
     // check this user with another user
     // if the same, return 0
     // this user bigger than another user, return 1
     // otherwise, return -1
     private int compareTo(User user) {
-        if(this.borrowedBooks.size() == user.borrowedBooks.size()) {
+        if (this.borrowedBooks.size() == user.borrowedBooks.size()) {
             return 0;
-        }
-        else if (this.borrowedBooks.size() > user.borrowedBooks.size()) {
+        } else if (this.borrowedBooks.size() > user.borrowedBooks.size()) {
             return 1;
         } else {
             return -1;
