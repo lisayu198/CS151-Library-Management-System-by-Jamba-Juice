@@ -266,6 +266,7 @@ public class UserFrame extends JFrame {
                     for (Book book : Book.BOOKS) {
                         if (book.getTitle().equalsIgnoreCase(bookRemoved.trim())) {
                             book.setCheckedIn(true);
+                            // Must remove book by Index, unlike adding book by object
                             UserFrame.this.user.getBorrowedBooks().remove(selectedIndex);
                             break;
                         }

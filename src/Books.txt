@@ -64,7 +64,7 @@ GOOD
 The Cat in The Hat
 Dr. Suess
 9780007247912
-true
+false
 POOR
 1
 
