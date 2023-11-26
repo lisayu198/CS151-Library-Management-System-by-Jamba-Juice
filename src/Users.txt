@@ -4,11 +4,7 @@ mb@gmail.com
 Password1!
 19897
 9788809970762
-<<<<<<< Updated upstream
 9780007247912
-=======
-45182741892734
->>>>>>> Stashed changes
 
 Lisa
 Yu
@@ -16,11 +12,8 @@ ly@gmail.com
 Password1!
 19834
 9780156027328
-<<<<<<< Updated upstream
 9780261102217
-=======
-80085
->>>>>>> Stashed changes
+45182741892734
 
 Jess
 Fung
