@@ -131,7 +131,7 @@ public class UserFrame extends JFrame {
 
 
     // Build libraryBooks contents
-    public void buildLibraryBooksPanel() {
+    private void buildLibraryBooksPanel() {
         BoxLayout layout = new BoxLayout(libraryBooksPanel, BoxLayout.Y_AXIS);
         libraryBooksPanel.setLayout(layout);
 
@@ -157,6 +157,7 @@ public class UserFrame extends JFrame {
                     if (value != null && libraryBookList.getSelectedValue() != null &&
                             value.startsWith(libraryBookList.getSelectedValue())) {
                         JOptionPane.showMessageDialog(UserFrame.this, value, "book info", JOptionPane.INFORMATION_MESSAGE);
+                        return;
                     }
                 }
             }
@@ -172,12 +173,23 @@ public class UserFrame extends JFrame {
         libraryButtonsPanel.add(checkOutButton);
         checkOutButton.setEnabled(false);
 
+        // ActionListener is used when the checkOutButton is clicked
         checkOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = libraryBookList.getSelectedIndex();
                 if (selectedIndex != -1) {
                     String bookRemoved = libraryBooksModel.getElementAt(selectedIndex);
+                    // Check if user already checked out book from library
+                    for (Book currentBook : UserFrame.this.user.getBorrowedBooks()) {
+                        // If same book was alrdy checked out by user, show an error
+                        if (currentBook.getTitle().equals(bookRemoved)) {
+                            JOptionPane.showMessageDialog(null, "Error, cannot check out the same book");
+                            return;
+                        }
+                    }
+
+                    // fine, now remove book from library and add to user's booklist
                     // remove checkedOut book from library
                     libraryBooksModel.remove(selectedIndex);
                     // Refreshes the label on the UI
@@ -186,6 +198,7 @@ public class UserFrame extends JFrame {
                     usersBooksModel.addElement(bookRemoved);
                     checkOutButton.setEnabled(false);
 
+                    // Goes through bookList and sets checkedIn to false of the book checkedout
                     for (Book book : Book.getBooks()) {
                         if (book.getTitle().equalsIgnoreCase(bookRemoved)) {
                             book.setCheckedIn(false);
@@ -194,8 +207,9 @@ public class UserFrame extends JFrame {
                         }
                     }
                 }
-                updateFiles();
 
+
+                updateFiles();
             }
         });
 
@@ -300,7 +314,7 @@ public class UserFrame extends JFrame {
         ArrayList<Book> bookList = Book.getBooks();
         libraryBooksModel.clear();
         for (int ii = 0; ii < bookList.size(); ii++) {
-            if (!isBookCheckedOut(bookList.get(ii).getTitle()) && bookList.get(ii).isCheckedIn()) {
+            if (bookList.get(ii).isCheckedIn()) {
                 libraryBooksModel.addElement(bookList.get(ii).getTitle());
             }
         }

@@ -99,7 +99,7 @@ NEW
 Animal Farm
 George Orswell
 45182741892734
-true
+false
 NEW
 1
 
@@ -111,9 +111,9 @@ FAIR
 1
 
 Animal Farm
-aaa
-4456790
+George Orswell
+45182741892734
 true
-FAIR
+NEW
 1
 

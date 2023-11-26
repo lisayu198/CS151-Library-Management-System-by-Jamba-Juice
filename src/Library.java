@@ -79,6 +79,7 @@ public class Library {
                         if (value != null && bookJList.getSelectedValue() != null &&
                                 value.startsWith(bookJList.getSelectedValue())) {
                             JOptionPane.showMessageDialog(libraryFrame, value, "book info", JOptionPane.INFORMATION_MESSAGE);
+                            break;
                         }
                     }
                 }

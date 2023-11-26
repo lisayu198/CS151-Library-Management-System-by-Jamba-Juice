@@ -105,8 +105,19 @@ NEW
 
 italkinmemes
 toshi bhat
+<<<<<<< Updated upstream
 80085438572387
+=======
+80085
 true
 FAIR
+1
+
+Animal Farm
+George Orswell
+45182741892734
+>>>>>>> Stashed changes
+true
+NEW
 1
 

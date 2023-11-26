@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Book {
@@ -191,6 +192,19 @@ public class Book {
         }
     }
 
+    // Equals method to check if 2 book objects are equal by checking title, author, and isbn
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Book book = (Book) o;
+        return Objects.equals(title, book.getTitle()) && Objects.equals(author, book.getAuthor()) && Objects.equals(isbn, book.getIsbn());
+
+    }
 
     public static void main(String[] args) throws IOException {
         Book newBook = new Book();
