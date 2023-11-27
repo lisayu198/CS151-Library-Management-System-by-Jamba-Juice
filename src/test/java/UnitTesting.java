@@ -1,10 +1,12 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import src.Book;
-import src.Library;
-import src.UnavailableBookException;
-import src.User;
+import src.*;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import static junit.framework.TestCase.*;
 
@@ -19,9 +21,23 @@ public class UnitTesting {
         newLibrary.getBookList().clear();
     }
 
+    // After the tests, reset all the txt files back to the original
     @After
     public void cleanUp() {
-        // newLibrary.getBookList()
+        try {
+            // Revert back to original books txt file
+            Path source = Paths.get(WelcomeScreen.ORIG_BOOKS_TXT_PATH);
+            Path target = Paths.get(WelcomeScreen.BOOKS_TXT_PATH);
+            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+
+            // Revert back to original users txt file
+            source = Paths.get(WelcomeScreen.ORIG_USERS_TXT_PATH);
+            target = Paths.get(WelcomeScreen.USERS_TXT_PATH);
+            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception ex) {
+            System.out.println("Cleanup Files Error: " + ex);
+        }
     }
 
     /**
@@ -38,9 +54,9 @@ public class UnitTesting {
 
         newLibrary.addBookAction(null); //call the addBookAction method (null b/c no need for click sensor)
 
-        assertEquals(1, newLibrary.getBookList().size()); //make sure the array list has the tester book info
+        assertEquals(17, newLibrary.getBookList().size()); //make sure the array list has the tester book info
 
-        String testMethod = newLibrary.getBookList().get(0); //new string to store the first value of the book list
+        String testMethod = newLibrary.getBookList().get(newLibrary.getBookList().size()-1); //new string to store the first value of the book list
 
         /**
          * assertTrue() makes sure the testMethod string has all the tester inputs
@@ -56,7 +72,7 @@ public class UnitTesting {
     @Test
     public void testCheckOutBook() {
         newUser = new User("test", "user", "testuser@HAHA.com", "Hello123!", "80085");
-        newBook = new Book("how to survive 5 nights at freddy's", "8008135L", "josh hutcherson", Book.CONDITION.GOOD, false, 5);
+        newBook = new Book("how to survive 5 nights at freddy's", "8008135L", "josh hutcherson", Book.CONDITION.GOOD, true, 5);
         Book takenBook = new Book("how to not survive 5 nights at freddy's", "9012355L", "william afton", Book.CONDITION.POOR, true, 1);
 
         try{
@@ -87,15 +103,17 @@ public class UnitTesting {
         System.out.println("testPopulateCatalogue succeed");
     }
 
-//    @Test
-//    public void testWriteToFile(){
-//        try{
-//            newBook.populateCatalogue();
-//            Book.writeToFile();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    @Test
+    public void testWriteToFile(){
+        try{
+            newBook.populateCatalogue();
+            Book.writeToFile();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("testWriteToFile succeed");
+    }
 
     @Test
     public void testCompare(){

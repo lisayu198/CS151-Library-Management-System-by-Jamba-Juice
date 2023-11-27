@@ -179,15 +179,13 @@ public class Book {
         return a;
     }
 
-    public static boolean isAvailable() {
-        return false;
-
+    public boolean isAvailable() {
+        return checkedIn;
     }
 
 
     public static int compare(Book book, String title) {
-        title.trim();
-        System.out.println(title);
+        System.out.println(title.trim());
         if (book.getTitle().equalsIgnoreCase(title.trim())) {
             return 0;
         } else {

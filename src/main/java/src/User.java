@@ -76,6 +76,7 @@ public class User {
                 throw new UnavailableBookException("Book is not available for check out");
             }
             // code to check out the book
+            this.getBorrowedBooks().add(book);
         } catch (UnavailableBookException e) {
             System.out.println("Error: " + e.getMessage());
         }
