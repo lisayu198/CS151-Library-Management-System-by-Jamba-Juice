@@ -1,4 +1,74 @@
-book test
+Little Women
+Louisa May Alcott
+9788809970762
+false
+GOOD
+1The Very Hungry Caterpillar
+Eric Carl
+9780140569322
+true
+NEW
+1Twilight
+Stephenie Meyer
+9780316038379
+false
+GOOD
+1The Great Gatsby
+F. Scott Fitzgerald
+9780333791035
+true
+FAIR
+1Adventures of Huckleberry Fin
+Mark Twain
+9780060467210
+true
+GOOD
+1All the Right Places
+Jennifer Niven
+9783734104657
+true
+POOR
+1Goodnight Moon
+Margret Wise Brown
+9780061119774
+true
+FAIR
+1My Sister’s Keeper
+Jodi Picoult
+9780340837740
+true
+FAIR
+1The Fault in Our Stars
+John Green
+9780143567592
+true
+GOOD
+1The Cat in The Hat
+Dr. Suess
+9780007247912
+false
+POOR
+1The Hobbit
+J.R.R. Tolkien
+9780261102217
+false
+FAIR
+1Anne of Green Gables
+L.M. Montgomery
+9780194229654
+true
+NEW
+1Life of Pi
+Yann Martel
+9780156027328
+false
+NEW
+1To Kill a Mockingbird
+Harper Lee
+9782253115847
+true
+NEW
+1book test
 author test
 80085
 FAIR

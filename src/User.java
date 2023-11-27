@@ -21,10 +21,11 @@ public class User {
         this.email = email;
         this.password = password;
         this.libraryCardNum = libraryCardNum;
+        this.borrowedBooks = new ArrayList<>();
     }
 
     public User() {
-        this.borrowedBooks = new ArrayList<>();
+        //this.borrowedBooks = new ArrayList<>();
     }
 
     // Getters and setters
@@ -75,9 +76,12 @@ public class User {
         try {
             if (!book.isAvailable()) {
                 throw new src.UnavailableBookException("Book is not available for check out");
+            }else{
+                book.setAvailable(false);
+                borrowedBooks.add(book);
             }
             // code to check out the book
-        } catch (src.UnavailableBookException e) {
+        } catch (UnavailableBookException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }

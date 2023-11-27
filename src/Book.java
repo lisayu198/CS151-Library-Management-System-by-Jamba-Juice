@@ -15,7 +15,7 @@ public class Book {
     }
 
     private String title;
-    private boolean checkedIn;
+    private static boolean checkedIn;
     private Long isbn;
     private String author;
     private CONDITION condition;
@@ -126,9 +126,9 @@ public class Book {
             a.append(BOOKS.get(i).title + "\n");
             a.append(BOOKS.get(i).author + "\n");
             a.append(BOOKS.get(i).isbn.toString() + "\n");
-            a.append(String.valueOf(BOOKS.get(i).checkedIn) + "\n");
-            a.append(String.valueOf(BOOKS.get(i).condition) + "\n");
-            a.append(String.valueOf(BOOKS.get(i).copies) + "\n");
+            a.append(BOOKS.get(i).checkedIn + "\n");
+            a.append(BOOKS.get(i).condition + "\n");
+            a.append(BOOKS.get(i).copies + "\n");
 
         }
 
@@ -152,9 +152,12 @@ public class Book {
 
         return a;
     }
+    public void setAvailable(boolean available){
+        checkedIn = available;
+    }
 
     public static boolean isAvailable() {
-        return false;
+        return checkedIn;
 
     }
 
