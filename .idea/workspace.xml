@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61d33400-2ef1-477b-80c1-624ebe491bf5" name="Changes" comment="" />
+    <list default="true" id="cbaead3e-88a9-4b90-a57e-43255c685fa3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +17,19 @@
     <analyzeAfterCompile>true</analyzeAfterCompile>
     <toolWindowToFront>false</toolWindowToFront>
   </component>
-  <component name="ProjectId" id="2YMJ7fKgFkXeNp4kHSWVt9oji15" />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2YjkGyK8TUXIs8uSKa7LzQHZ4TB" />
   <component name="ProjectViewState">
     <option name="abbreviatePackageNames" value="true" />
     <option name="autoscrollFromSource" value="true" />
@@ -31,41 +43,20 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/Users/lisayu/IdeaProjects/lisa_branch/src/loginUI",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "last_opened_file_path": "/Users/lisayu/IdeaProjects/JambaJuice_lisabranch",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/loginUI" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.WelcomeScreen">
+  <component name="RunManager">
     <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
     </configuration>
-    <configuration name="WelcomeScreen" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="WelcomeScreen" />
-      <module name="lisa_branch" />
-      <method v="2" />
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="loginUI.WelcomeScreen" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="loginUI.WelcomeScreen" />
-      <module name="lisa_branch" />
-      <method v="2" />
-    </configuration>
-    <configuration name="src.loginUI.WelcomeScreen" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="src.loginUI.WelcomeScreen" />
-      <module name="lisa_branch" />
-      <method v="2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
@@ -76,31 +67,4 @@
     </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Library.java</url>
-          <line>258</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/UserFrame.java</url>
-          <line>152</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <condition expression="ii==16" language="JAVA" />
-          <url>file://$PROJECT_DIR$/src/UserFrame.java</url>
-          <line>316</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="bookList.get(ii)" language="JAVA" />
-      </configuration>
-    </watches-manager>
-  </component>
 </project>
