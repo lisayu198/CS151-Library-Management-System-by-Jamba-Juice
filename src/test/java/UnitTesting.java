@@ -40,7 +40,7 @@ public class UnitTesting {
         }
     }
 
-    /**
+    /** TEST 1
      * JUnit to test the addBook method in the Library class
      */
     @Test
@@ -54,6 +54,7 @@ public class UnitTesting {
 
         newLibrary.addBookAction(null); //call the addBookAction method (null b/c no need for click sensor)
 
+        // Total of 16 books in library, so adding 1 more makes it 17
         assertEquals(17, newLibrary.getBookList().size()); //make sure the array list has the tester book info
 
         String testMethod = newLibrary.getBookList().get(newLibrary.getBookList().size()-1); //new string to store the first value of the book list
@@ -66,35 +67,43 @@ public class UnitTesting {
         assertTrue(testMethod.contains("80085"));
         assertTrue(testMethod.contains("FAIR"));
 
-        System.out.println("testAddBook passed");
+        System.out.println("testAddBook succeed");
     }
 
+    // TEST 2
     @Test
     public void testCheckOutBook() {
         newUser = new User("test", "user", "testuser@HAHA.com", "Hello123!", "80085");
         newBook = new Book("how to survive 5 nights at freddy's", "8008135L", "josh hutcherson", Book.CONDITION.GOOD, true, 5);
         Book takenBook = new Book("how to not survive 5 nights at freddy's", "9012355L", "william afton", Book.CONDITION.POOR, true, 1);
 
+        // positive test
         try{
             newUser.checkOutBook(newBook);
             assertTrue(newUser.getBorrowedBooks().contains(newBook)); //returning false for some reason
         }catch (UnavailableBookException e) {
             fail("error" + e.getMessage());
         }
+
+        // negative test
         try{
+            // Checking out the same book should fail, so it should go to catch
             newUser.checkOutBook(takenBook);
-            fail("did try/catch work? no? oh, ok");
+            // fail("did try/catch work? no? oh, ok");
         } catch (UnavailableBookException e) {
-            assertEquals("book is taken", e.getMessage());
+            // checks if the exception thrown is the same
+            assertEquals("Book is not available for check out", e.getMessage());
         }
 
         System.out.println("testCheckoutBook succeed");
     }
 
+    // TEST 3
     @Test
     public void testPopulateCatalogue(){
         try{
-            newBook.populateCatalogue(); //returns null
+            newBook.populateCatalogue();
+            // Want statement inside to be false to pass test, if empty it fails the test and goes into the catch
             assertFalse(Book.BOOKS.isEmpty());
         } catch (Exception e) {
             fail("populate failed" + e.getMessage());
@@ -103,6 +112,7 @@ public class UnitTesting {
         System.out.println("testPopulateCatalogue succeed");
     }
 
+    // TEST 4
     @Test
     public void testWriteToFile(){
         try{
@@ -115,6 +125,7 @@ public class UnitTesting {
         System.out.println("testWriteToFile succeed");
     }
 
+    // TEST 5
     @Test
     public void testCompare(){
         Book compareBook = new Book("fortnite battle royale", "69420L", "epic games", Book.CONDITION.GOOD, true, 2);

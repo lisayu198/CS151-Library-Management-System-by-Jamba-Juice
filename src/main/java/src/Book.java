@@ -130,14 +130,6 @@ public class Book {
                 + "\nChecked In: " + checkedIn + "\nCopies: " + copies;
     }
 
-    /*public static void iterateUsingForEach(Map<Integer, bookArrayList> BOOK) {
-        for (Map.Entry<Integer, bookArrayList> entry : BOOK.entrySet()) {
-            Integer key = entry.getKey();
-            System.out.println(BOOK.get(key).toString() + "\n");
-
-        }
-    }
-*/
     public static void writeToFile() throws IOException {
         File e = new File(WelcomeScreen.BOOKS_TXT_PATH);
         PrintWriter out = new PrintWriter(e);
@@ -185,7 +177,6 @@ public class Book {
 
 
     public static int compare(Book book, String title) {
-        System.out.println(title.trim());
         if (book.getTitle().equalsIgnoreCase(title.trim())) {
             return 0;
         } else {
@@ -215,8 +206,6 @@ public class Book {
             System.out.println(ex.getMessage());
         }
         writeToFile();
-
-
     }
 
 

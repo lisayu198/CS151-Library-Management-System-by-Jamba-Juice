@@ -75,7 +75,7 @@ public class User {
             if (!book.isAvailable()) {
                 throw new UnavailableBookException("Book is not available for check out");
             }
-            // code to check out the book
+            // If available, will go here to check out the book and add to borrowedBooks list
             this.getBorrowedBooks().add(book);
         } catch (UnavailableBookException e) {
             System.out.println("Error: " + e.getMessage());
@@ -89,6 +89,7 @@ public class User {
     }
 
     public ArrayList<Book> getBorrowedBooks() {
+        // If arrayList is null it will create an empty arraylist
         if (this.borrowedBooks == null) {
             this.borrowedBooks = new ArrayList<>();
         }
