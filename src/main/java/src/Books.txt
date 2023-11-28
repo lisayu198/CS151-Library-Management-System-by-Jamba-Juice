@@ -78,7 +78,7 @@ FAIR
 Anne of Green Gables
 L.M. Montgomery
 9780194229654
-true
+false
 NEW
 1
 
