@@ -78,7 +78,7 @@ FAIR
 Anne of Green Gables
 L.M. Montgomery
 9780194229654
-false
+true
 NEW
 1
 
@@ -99,14 +99,14 @@ NEW
 Animal Farm
 George Orswell
 45182741892734
-false
+true
 NEW
 1
 
 italkinmemes
 toshi bhat
 80085438572387
-false
+true
 FAIR
 1
 
