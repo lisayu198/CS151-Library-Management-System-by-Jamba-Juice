@@ -38,3 +38,4 @@ Login into Library database to add/remove books in library (same login page as u
 *UML diagrams are in the Diagrams branch*
 <a href="SequenceDiagram"><img src="Lisa - SequenceDiagram.png" alt="Description"></a>
 <a href="CaseDigram"><img src="Lisa - CaseDigram.png" alt="Description"></a>
+<a href="ClassDigram"><img src="Nelly-ClassDiagram.png" alt="Description"></a>
