@@ -39,3 +39,4 @@ Login into Library database to add/remove books in library (same login page as u
 <a href="SequenceDiagram"><img src="Lisa - SequenceDiagram.png" alt="Description"></a>
 <a href="CaseDigram"><img src="Lisa - CaseDigram.png" alt="Description"></a>
 <a href="ClassDiagram"><img src="Nelly-ClassDiagram.jpg" alt="Description"></a>
+<a href="StateDiagram"><img src="Jessica - State Diagram.png" alt="Description"></a>
