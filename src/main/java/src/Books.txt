@@ -99,14 +99,14 @@ NEW
 Animal Farm
 George Orswell
 45182741892734
-true
+false
 NEW
 1
 
 italkinmemes
 toshi bhat
 80085438572387
-true
+false
 FAIR
 1
 

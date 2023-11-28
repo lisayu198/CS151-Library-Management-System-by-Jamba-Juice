@@ -8,24 +8,26 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Book {
-
+// enum class for the condition of the book
     public enum CONDITION {
         NEW, GOOD, FAIR, POOR
     }
-
+// variables for creating a book object; the author, title, isbn, condition, copies
     private String title;
     private boolean checkedIn;
     private String isbn;
     private String author;
     private CONDITION condition;
     private int copies;
+
+    // Master BOOKS arraylist that holds the books inputed into the file
     public static ArrayList<Book> BOOKS = new ArrayList<Book>();
 
-
+// empty constructor
     public Book() {
 
     }
-
+// constructor with all the attributes
     public Book(String title, String isbn, String author, CONDITION condition, Boolean checkedIn, int copies) {
         this.title = title;
         this.isbn = isbn;
@@ -34,39 +36,58 @@ public class Book {
         this.checkedIn = checkedIn;
         this.copies = copies;
     }
-
+    /*
+    returns title
+    */
     public String getTitle() {
         return title;
     }
-
+    /*
+        sets Title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
-
+    /*
+    returns ISBN
+     */
     public String getIsbn() {
         return isbn;
     }
-
+    /*
+    sets ISBN
+     */
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
+    /*
+    returns author
+     */
     public String getAuthor() {
         return author;
     }
-
+    /*
+    sets author
+     */
     public void setAuthor(String author) {
         this.author = author;
     }
-
+    /*
+    returns checkedIn variable
+     */
     public boolean isCheckedIn() {
         return this.checkedIn;
     }
-
+    /*
+    sets checkedIn attribute
+     */
     public void setCheckedIn(boolean value) {
         this.checkedIn = value;
     }
-
+    /*
+    repopulates the BOOKS arraylist with the file inputs and returns the BOOKS arraylist
+    throws an exception
+     */
     public static ArrayList<Book> getBooks() {
         // refresh books available
         try {
@@ -78,7 +99,20 @@ public class Book {
         return BOOKS;
     }
 
+    /*
+    We have formated a file to be in the set up of
+    Title
+    Author
+    ISBN
+    CheckedIN
+    Condition
+    Copies
 
+    from there a Book file is created and stored into the BOOKS arrayList
+
+    Creates file objects using the WelcomeScreen variable BOOKS_TXT_PATH
+    uses a scanner to scan through file and
+     */
     public static void populateCatalogue() throws Exception {
         BOOKS.clear();
 
@@ -130,6 +164,9 @@ public class Book {
                 + "\nChecked In: " + checkedIn + "\nCopies: " + copies;
     }
 
+    /*
+    Writes to a file using a PrintWriter and with the help of writeToFileHelper()
+     */
     public static void writeToFile() throws IOException {
         File e = new File(WelcomeScreen.BOOKS_TXT_PATH);
         PrintWriter out = new PrintWriter(e);
@@ -137,7 +174,21 @@ public class Book {
         out.close();
     }
 
+    /*
+    Reads in each book individually from the BOOKS arraylist and implements it into
+    a StringBuilder in the format of
+    Title
+    Author
+    ISBN
+    CheckedIN
+    Condition
+    Copies
+
+    and returns the stringBuilder to writeToFile()
+
+     */
     private static StringBuilder writeToFileHelper() {
+
         StringBuilder a = new StringBuilder("");
 
         for (int i = 0; i < BOOKS.size(); i++) {
@@ -149,25 +200,6 @@ public class Book {
             a.append(String.valueOf(BOOKS.get(i).copies) + "\n\n");
 
         }
-
-		/*	for (Map.Entry<Integer, bookArrayList> entry : BOOKS.entrySet()) {
-				Integer key = entry.getKey();
-
-				a.append(BOOKS.get(key).title + "\n");
-
-				a.append(BOOKS.get(key).author + "\n");
-
-				a.append(BOOKS.get(key).isbn.toString() + "\n");
-
-				a.append(String.valueOf(BOOKS.get(key).checkedIn) + "\n");
-
-				a.append(String.valueOf(BOOKS.get(key).condition) + "\n");
-
-				a.append(String.valueOf(BOOKS.get(key).copies) + "\n\n");
-
-
-			}*/
-
         return a;
     }
 
@@ -175,7 +207,9 @@ public class Book {
         return checkedIn;
     }
 
-
+    /*
+    Compares two books based on the title;
+     */
     public static int compare(Book book, String title) {
         if (book.getTitle().equalsIgnoreCase(title.trim())) {
             return 0;

@@ -20,7 +20,9 @@ public class UserFrame extends JFrame {
     private JTextField firstNameField, lastNameField, emailField, usernameField;
     private User user;
     JList<String> userCheckoutBookList = new JList<>(new DefaultListModel<>());
+    // Model for JList to modify the contents inside the usersBooksList
     DefaultListModel<String> usersBooksModel = (DefaultListModel<String>) userCheckoutBookList.getModel();
+    // JList for library bookList with a model to modify the contents of the librarybookList
     JList<String> libraryBookList = new JList<>(new DefaultListModel<>());
     DefaultListModel<String> libraryBooksModel = (DefaultListModel<String>) libraryBookList.getModel();
     // Check in button
@@ -28,7 +30,7 @@ public class UserFrame extends JFrame {
     // checkedout button panel
     JButton checkOutButton = new JButton("check out");
     String bookFile = WelcomeScreen.BOOKS_TXT_PATH;
-    List<String> bookInfoList = new ArrayList<>();
+    List<String> bookInfoList = new ArrayList<>();  // Arraylist of bookInfo
 
 
     JPanel displayBooksPanel = new JPanel();        // the bookLists panel
@@ -40,9 +42,9 @@ public class UserFrame extends JFrame {
     // constructor
     public UserFrame(User user) {
         this.user = user;
-        this.setTitle("USER PAGE");
+        this.setTitle("USER PAGE"); // Title of frame on top
 
-        this.setSize(new Dimension(800, 500));
+        this.setSize(new Dimension(800, 500));  // Hardcode the size of the frame
         // When you x out the UserFrame, it will go back to welcome screen and write to file
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
@@ -70,11 +72,11 @@ public class UserFrame extends JFrame {
 
     // Build the contents of the bigPanel
     public void buildBigContents() {
-        // BoxLayout layout = new BoxLayout(bigPanel, BoxLayout.Y_AXIS);
+        // Using a border layout
         bigPanel.setLayout(new BorderLayout());
 
-        bigPanel.add(userInfoPanel, BorderLayout.NORTH);
-        bigPanel.add(displayBooksPanel, BorderLayout.CENTER);
+        bigPanel.add(userInfoPanel, BorderLayout.NORTH);    //Make the userInfoPanel in the north (the top)
+        bigPanel.add(displayBooksPanel, BorderLayout.CENTER);   // Set the displayBooksPanel in the center of the frame
 
         add(bigPanel);      // adds to userFrame
 
@@ -82,28 +84,29 @@ public class UserFrame extends JFrame {
 
     // Build the bookList panel contents
     public void buildBookListsPanel() {
+        // Use box layout on the x_axis
         BoxLayout layout = new BoxLayout(displayBooksPanel, BoxLayout.X_AXIS);
-        displayBooksPanel.setLayout(layout);
+        displayBooksPanel.setLayout(layout);    // center the layout
 
-        displayBooksPanel.add(userInfoPanel);
+        displayBooksPanel.add(userInfoPanel);   // add userInfoPanel to the frame
 
-        // displayBooksPanel.add(Box.createHorizontalGlue());
+        /*
+        Add panels and create a space in between the two panels on the horizontal axis
+         */
         displayBooksPanel.add(checkedoutBooksPanel);
         displayBooksPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         displayBooksPanel.add(libraryBooksPanel);
-        // displayBooksPanel.add(Box.createHorizontalGlue());
-
-        // add(displayBooksPanel);
     }
 
     // Build UserInfo contents
     public void buildUserInfoPanel() {
+        // Build a boxlayout by the x_axis
         BoxLayout layout = new BoxLayout(userInfoPanel, BoxLayout.X_AXIS);
         userInfoPanel.setLayout(layout);
         // display the user's first and last name, plus the username
-        userInfoPanel.add(Box.createHorizontalGlue());
-        JLabel firstNameLastName = new JLabel(user.getFirstName() + " " + user.getLastName() + "; ");
-        JLabel userName = new JLabel(String.valueOf(user.getLibraryCardNum()));
+        userInfoPanel.add(Box.createHorizontalGlue());  // Horizontal glue on the left pushes everything to the right
+        JLabel firstNameLastName = new JLabel(user.getFirstName() + " " + user.getLastName() + "; "); // add the first name and last name
+        JLabel userName = new JLabel(String.valueOf(user.getLibraryCardNum())); // Add the library card number
         userInfoPanel.add(firstNameLastName);
         userInfoPanel.add(userName);
 

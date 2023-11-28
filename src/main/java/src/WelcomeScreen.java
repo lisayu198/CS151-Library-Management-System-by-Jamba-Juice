@@ -15,10 +15,10 @@ public class WelcomeScreen extends JFrame implements ActionListener {
     private JButton signupButton;
     private JButton loginButton;
 
-    public static final String USERS_TXT_PATH = "/Users/lisayu/IdeaProjects/JambaJuice_lisabranch/src/main/java/src/Users.txt";
-    public static final String ORIG_USERS_TXT_PATH = "/Users/lisayu/IdeaProjects/JambaJuice_lisabranch/src/main/java/src/UsersCopy.txt";
-    public static final String BOOKS_TXT_PATH = "/Users/lisayu/IdeaProjects/JambaJuice_lisabranch/src/main/java/src/Books.txt";
-    public static final String ORIG_BOOKS_TXT_PATH = "/Users/lisayu/IdeaProjects/JambaJuice_lisabranch/src/main/java/src/BooksCopy.txt";
+    public static final String USERS_TXT_PATH = "src/main/java/src/Users.txt";
+    public static final String ORIG_USERS_TXT_PATH = "src/main/java/src/UsersCopy.txt";
+    public static final String BOOKS_TXT_PATH = "src/main/java/src/Books.txt";
+    public static final String ORIG_BOOKS_TXT_PATH = "src/main/java/src/BooksCopy.txt";
 
     // Hashmap to store users with email as key
     private static HashMap<String, User> emailMap = new HashMap<>();
