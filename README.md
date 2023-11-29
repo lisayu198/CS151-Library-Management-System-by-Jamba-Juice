@@ -45,10 +45,16 @@ Class Diagram
 State Diagram
 <a href="StateDiagram"><img src="Jessica - State Diagram.png" alt="Description"></a>
 
+
+WAlK THROUGH:
 Welcome Screen
 <a href="WelcomeScreen"><img src="WelcomeScreen.png" alt="Description"></a>
+
 Sign Up Screen
 <a href="SignUpScreen"><img src="SignUpPage.png" alt="Description"></a>
+
+Library Card Num
+<a href="LibrarianCardNum"><img src="LibraryCardNum.png" alt="Description"></a>
 
 Log In Screen
 <a href="LogInPage"><img src="LoginPage.png" alt="Description"></a>
@@ -56,8 +62,26 @@ Log In Screen
 User Page
 <a href="UserPage"><img src="UserPage.png" alt="Description"></a>
 
+Book Info Page
+<a href="BookInfoPage"><img src="BookInfoPage.png" alt="Description"></a>
+
 Book Checked Out
 <a href="BookCheckedOut"><img src="BookCheckedOut.png" alt="Description"></a>
+
+Librarian Page
+<a href="Librarian"><img src="BookCheckedOut.png" alt="Description"></a>
+
+Adding Book as Librarian
+<a href="AddingBook"><img src="AddingBook.png" alt="Description"></a>
+
+Added Book by Librarian
+<a href="BookAdded"><img src="BookAdded.png" alt="Description"></a>
+
+Removed Book by Librarian
+<a href="BooksRemoved"><img src="RemovedBooks.png" alt="Description"></a>
+
+
+
 
 
 
