@@ -47,4 +47,5 @@ State Diagram
 
 Welcome Screen
 <a href="WelcomeScreen"><img src="Screenshot 2023-11-28 at 4.06.53 PM.png" alt="Description"></a>
+Log In Screen
 
