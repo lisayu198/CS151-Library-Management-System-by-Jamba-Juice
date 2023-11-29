@@ -46,5 +46,5 @@ State Diagram
 <a href="StateDiagram"><img src="Jessica - State Diagram.png" alt="Description"></a>
 
 Welcome Screen
-<a href="WelcomeScreen"><img src="Screenshot 2023-11-28 at 4.06.53 PM" alt="Description"></a>
+<a href="WelcomeScreen"><img src="Screenshot 2023-11-28 at 4.06.53 PM.png" alt="Description"></a>
 
