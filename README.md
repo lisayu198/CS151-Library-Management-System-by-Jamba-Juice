@@ -83,7 +83,9 @@ OR login with a pre-exisitng account:
 
 EXTRA CREDIT: Login as librarian,
 Library Card Number: Librarian
+
 Password: librarian123!
+
 Here, you can add a book on the right by entering the 4 fields, title, author, ISBN and condition
 You can also remove book by clicking on the book on the left panel, it will also display book info
 
