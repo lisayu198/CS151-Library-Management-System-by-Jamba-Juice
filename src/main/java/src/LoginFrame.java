@@ -19,16 +19,16 @@ public class LoginFrame extends JFrame implements ActionListener {
 
     public LoginFrame() {
         panel.setLayout(null);  // center the panel
-        this.add(panel);
-        this.setSize(new Dimension(500, 200));
-        this.setResizable(false);
+        this.add(panel);    // add panel to frame
+        this.setSize(new Dimension(500, 200));  // set size
+        this.setResizable(false);   // don't allow user to resize frame
         this.setTitle("USER LOGIN");
 
-        // When you x out the LoginFrame, it will go back to loginUI.WelcomeScreen
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // When you x out the LoginFrame, it will go back to WelcomeScreen
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // set default close to do nothing
         this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent e) {  // call welcomeScreen
                 try {
                     WelcomeScreen welcomeScreen = new WelcomeScreen();
                 } catch (IOException ex) {
@@ -48,32 +48,33 @@ public class LoginFrame extends JFrame implements ActionListener {
     public void buildContent() {
         // Username label
         libraryCardNumLabel = new JLabel("Library Card Number: ");
-        libraryCardNumLabel.setBounds(150, 8, 200, 20);
+        libraryCardNumLabel.setBounds(150, 8, 200, 20); // hardcode the bounds by x,y, width, height
         panel.add(libraryCardNumLabel);
 
         // Username text field
         libraryCardNumField = new JTextField();
-        libraryCardNumField.setBounds(150, 27, 193, 28);
+        libraryCardNumField.setBounds(150, 27, 193, 28); // hardcode the bounds by x,y, width, height
         panel.add(libraryCardNumField);
 
         // Password label
         passwordLabel = new JLabel("Password");
-        passwordLabel.setBounds(150, 55, 70, 20);
+        passwordLabel.setBounds(150, 55, 70, 20); // hardcode the bounds by x,y, width, height
         panel.add(passwordLabel);
 
         // Password field
-        passwordField = new JPasswordField();
-        passwordField.setBounds(150, 75, 193, 28);
+        passwordField = new JPasswordField();   // make it so that what's typed in is not visible
+        passwordField.setBounds(150, 75, 193, 28); // hardcode the bounds by x,y, width, height
         panel.add(passwordField);
 
         // Make the button
         loginButton = new JButton("Login");
-        loginButton.setBounds(250, 110, 90, 25);
-        loginButton.addActionListener(this);
+        loginButton.setBounds(250, 110, 90, 25); // hardcode the bounds by x,y, width, height
+        loginButton.addActionListener(this);    // actionListener which acts when button is pressed
         panel.add(loginButton);
     }
 
 
+    // actionListener for loginButton, goes here when clicked
     @Override
     public void actionPerformed(ActionEvent e) {
         String libraryCardNum = libraryCardNumField.getText();

@@ -105,7 +105,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/src/WelcomeScreen.java</url>
-          <line>235</line>
+          <line>213</line>
           <properties class="src.WelcomeScreen" method="main">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

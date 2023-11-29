@@ -1,7 +1,17 @@
 # CS151-Library-Management-System-by-Jamba-Juice
 
-Project title: Library Management System by Jamba Juice Team #, team members:
-Jamba Juice; Lisa Yu, Jessica Fung, Nelly Belmont
+Project title: Library Management System by Jamba Juice
+Team #, team members: Jamba Juice; Lisa Yu, Jessica Fung, Nelly Belmont
+
+
+HOW TO RUN CODE:
+double click on jar file
+(Note: All 4 txts must be in the same directory)
+
+HOW TO RUN JUNIT:
+- Compile and run UnitTesting java file
+
+
 1. Team members working on the proposal and their contributions in detail:
 Lisa -  State the problem/issue to resolve
 Jess - High-level description of your solution which may include (but is not limited to), your plan and approach. Be as specific as possible
@@ -30,7 +40,6 @@ Lisa used their HW4 as a base for the welcome and sign in page, then changed the
 Nelly used her prior assignments at De Anza to reference for the File I/O requirement
 Jessica used their HW 4 as a base for the library screen, as well as HW 5 for the JUnit tests.
 
-
 6. Diagrams [just the reference - hyperlinks not actual image] (update your diagrams if you have changed your design and previous feedback. Add a sequence diagram if it is missing)
 Sequence Diagram
 <a href="SequenceDiagram"><img src="Lisa - SequenceDiagram.png" alt="Description"></a>
@@ -45,6 +54,7 @@ State Diagram
 It creates a user friendly GUI to store the books from the library and the facilitate the transaction of books between the user and the library.
 We created a system that stores and processes a fluid list of books to be implemented by the GUI.
 Any changes to the list of users or books are stored in the respective text file
+
 8. Operations: List operations for each intended user (in list format).  Be precise and specific.
 	User:
 Access list of available books
@@ -62,21 +72,18 @@ We figured out how to create a repository, as well as commit and push our local 
 10. Steps to run your code
 On welcome screen, click on sign up to make a new account, you will be given a library card number
 Login with library card number and password
-OR login with a preexisitng account:
-Login:
+OR login with a pre-exisitng account:
 (Pre-existing user)
 - User: 19897
 - Password: Password1!
 Click on book in library and click on the checkout button and click on book in user book list then click on checkin button
 Logout to save data
+
 EXTRA CREDIT: Login as librarian,
 Library Card Number: Librarian
 Password: librarian123!
 Here, you can add a book on the right by entering the 4 fields, title, author, ISBN and condition
 You can also remove book by clicking on the book on the left panel, it will also display book info
-
-
-
 
 WAlK THROUGH:
 
@@ -102,7 +109,7 @@ Book Checked Out
 <a href="BookCheckedOut"><img src="BookCheckedOut.png" alt="Description"></a>
 
 Librarian Page
-<a href="Librarian"><img src="BookCheckedOut.png" alt="Description"></a>
+<a href="Librarian"><img src="LibrarianPage.png" alt="Description"></a>
 
 Adding Book as Librarian
 <a href="AddingBook"><img src="AddingBook.png" alt="Description"></a>

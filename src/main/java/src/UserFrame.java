@@ -356,14 +356,4 @@ public class UserFrame extends JFrame {
         return bookList;
     }
 
-    private boolean isBookCheckedOut(String bookName) {
-        for (int ii = 0; ii < usersBooksModel.size(); ii++) {
-            if (usersBooksModel.get(ii).equals(bookName)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 }

@@ -121,33 +121,19 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         // Read from backend database file
         File file = new File(WelcomeScreen.USERS_TXT_PATH);
 
-//        Scanner scanner = new Scanner(file);
-//        if (scanner.hasNextLine()) {
-//            String firstLine = scanner.nextLine();
-//            System.out.println("First line: " + firstLine);
-//        } else {
-//            System.out.println("The file is empty.");
-//        }
-//        scanner.close();
-
+        // Use a scanner to read the file
         Scanner fileInput = new Scanner(file);
-        while (fileInput.hasNextLine()) {
+        while (fileInput.hasNextLine()) {   // while file still has lines, keep scanning
             String temp = fileInput.nextLine();
-            if (temp.trim().length() == 0) {
+            if (temp.trim().length() == 0) {    // once there are no more lines, break
                 break;  // just empty lines; no more record
             }
-            User newUser = new User();
-            newUser.setFirstName(temp);
-            System.out.println("firstname " + newUser.getFirstName());
-            newUser.setLastName(fileInput.nextLine());
-            System.out.println("lastname " + newUser.getLastName());
+            User newUser = new User();  // create a new user object
+            newUser.setFirstName(temp); // set the first thing read in to firstName
+            newUser.setLastName(fileInput.nextLine());  // files reads line by line, so do .nextLine
             newUser.setEmail(fileInput.nextLine());
-            System.out.println("Email " + newUser.getEmail());
             newUser.setPassword(fileInput.nextLine());
-            System.out.println("Password " + newUser.getPassword());
             newUser.setLibraryCardNum(fileInput.nextLine());
-            System.out.println("librarynum " + newUser.getLibraryCardNum());
-
 
             // Store to libraryCardMap
             libraryCardMap.put(newUser.getLibraryCardNum(), newUser);
@@ -155,16 +141,15 @@ public class WelcomeScreen extends JFrame implements ActionListener {
             // if there is next line, it is checkout book isbn
             while (fileInput.hasNextLine()) {
                 try {
-                    String tempLine = fileInput.nextLine();
-                    if (tempLine.length() == 0) {
+                    String tempLine = fileInput.nextLine(); // first thing we read from txt
+                    if (tempLine.length() == 0) {   // break when no more lines to read
                         break;
                     }
-                    System.out.println("Starting of books: " + tempLine);
-
+                    // Read books.txt
+                    // store books into Users' borrowedBooks array
                     for (int k = 0; k < Book.BOOKS.size(); k++) {
-                        if (Book.BOOKS.get(k).getIsbn().equals(tempLine)) {
-                            newUser.getBorrowedBooks().add(Book.BOOKS.get(k));
-                            System.out.println("Book checked out: " + Book.BOOKS.get(k).getTitle());
+                        if (Book.BOOKS.get(k).getIsbn().equals(tempLine)) {     // find books by ISBN
+                            newUser.getBorrowedBooks().add(Book.BOOKS.get(k));  // add book to user by ISBN
                             break;
                         }
                     }
@@ -177,19 +162,11 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         fileInput.close();
     }
 
-    public static boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
+    // Write user info back to file
     public static void writeToFile() throws IOException {
-        File e = new File(WelcomeScreen.USERS_TXT_PATH);
+        File e = new File(WelcomeScreen.USERS_TXT_PATH);    // open file
         PrintWriter out = new PrintWriter(e);
-        out.print(writeToFileHelper());
+        out.print(writeToFileHelper()); // write back to file
         out.close();
     }
 
@@ -222,17 +199,18 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         return libraryCardMap;
     }
 
+    // For the buttons
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == signupButton) {
+        if (e.getSource() == signupButton) {    // if signupButton is clicked, open signupFrame
             SignupFrame signupFrame = new SignupFrame();
             dispose();
-        } else if (e.getSource() == loginButton) {
+        } else if (e.getSource() == loginButton) {  // if loginButton is clicked, open loginFrame
             LoginFrame loginFrame = new LoginFrame();
             dispose();
         }
     }
 
-
+    // Main is WelcomeScreen
     public static void main(String[] args) throws IOException {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
     }

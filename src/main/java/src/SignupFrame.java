@@ -26,8 +26,9 @@ public class SignupFrame extends JFrame implements ActionListener {
         panel.setLayout(null);
 
         this.add(panel);
-        this.setSize(new Dimension(500, 500));
+        this.setSize(new Dimension(500, 500));  // hardcode the size
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // Go to WelcomeScreen when closing window
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -36,12 +37,12 @@ public class SignupFrame extends JFrame implements ActionListener {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                dispose();
+                dispose();  // close the signup Frame
             }
         });
 
         this.buildContent();        // build the content inside the Signup JFrame
-        this.setResizable(false);
+        this.setResizable(false);   // don't allow user to resize frame
 
         setLocationRelativeTo(null);    // center the JFrame on the screen
         setVisible(true);               // Show the Signup JFrame
@@ -50,6 +51,7 @@ public class SignupFrame extends JFrame implements ActionListener {
 
     // Build contents
     public void buildContent() {
+        // Hardcode the locations and sizes
         // First Name label
         firstNameLabel = new JLabel("First Name: ");
         // 100px from left, 8px from top, 100px width, 20px height
