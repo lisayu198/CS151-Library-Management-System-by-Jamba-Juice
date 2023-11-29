@@ -78,13 +78,18 @@ On welcome screen, click on sign up to make a new account, you will be given a l
 Login with library card number and password
 OR login with a pre-exisitng account:
 (Pre-existing user)
-- User: 19897
+- Library Card Number: 19897
 - Password: Password1!
 
 EXTRA CREDIT: Login as librarian,
+
 Library Card Number: Librarian
 
 Password: librarian123!
+
+- Library Card Number: Librarian
+
+- Password: librarian123!
 
 Here, you can add a book on the right by entering the 4 fields, title, author, ISBN and condition
 You can also remove book by clicking on the book on the left panel, it will also display book info
