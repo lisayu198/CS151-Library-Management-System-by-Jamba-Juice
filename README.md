@@ -47,5 +47,19 @@ State Diagram
 
 Welcome Screen
 <a href="WelcomeScreen"><img src="Screenshot 2023-11-28 at 4.06.53 PM.png" alt="Description"></a>
+Sign Up Screen
+<a href="SignUpScreen"><img src="SignUpPage.png" alt="Description"></a>
+
 Log In Screen
+<a href="LogInPage"><img src="LoginPage.png" alt="Description"></a>
+
+User Page
+<a href="UserPage"><img src="UserPage.png" alt="Description"></a>
+
+Book Checked Out
+<a href="BookCheckedOut"><img src="BookCheckedOut.png" alt="Description"></a>
+
+
+
+
 
