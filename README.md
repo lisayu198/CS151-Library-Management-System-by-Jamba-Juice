@@ -64,6 +64,7 @@ We solved the GitHub issue by sort of figuring out how to use GitHub, using the 
 We figured out how to create a repository, as well as commit and push our local code into the remote code.
 
 10. Steps to run your code
+
 HOW TO RUN CODE:
 - double click on jar file
 (Note: All 4 txts must be in the same directory)
