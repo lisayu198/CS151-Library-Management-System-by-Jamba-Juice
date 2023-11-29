@@ -4,14 +4,6 @@ Project title: Library Management System by Jamba Juice
 Team #, team members: Jamba Juice; Lisa Yu, Jessica Fung, Nelly Belmont
 
 
-HOW TO RUN CODE:
-double click on jar file
-(Note: All 4 txts must be in the same directory)
-
-HOW TO RUN JUNIT:
-- Compile and run UnitTesting java file
-
-
 1. Team members working on the proposal and their contributions in detail:
 Lisa -  State the problem/issue to resolve
 Jess - High-level description of your solution which may include (but is not limited to), your plan and approach. Be as specific as possible
@@ -70,15 +62,23 @@ Condition of book: new, good, fair, poor
 9. Solution (How did you solve the problem)
 We solved the GitHub issue by sort of figuring out how to use GitHub, using the resources we were given.
 We figured out how to create a repository, as well as commit and push our local code into the remote code.
+
 10. Steps to run your code
+HOW TO RUN CODE:
+- double click on jar file
+(Note: All 4 txts must be in the same directory)
+
+HOW TO RUN JUNIT:
+- Compile and run UnitTesting java file
+
+
+Walkthrough steps descripton:
 On welcome screen, click on sign up to make a new account, you will be given a library card number
 Login with library card number and password
 OR login with a pre-exisitng account:
 (Pre-existing user)
 - User: 19897
 - Password: Password1!
-Click on book in library and click on the checkout button and click on book in user book list then click on checkin button
-Logout to save data
 
 EXTRA CREDIT: Login as librarian,
 Library Card Number: Librarian
