@@ -36,7 +36,15 @@ Login into Library database to add/remove books in library (same login page as u
 - Password: librarian123!
 
 *UML diagrams are in the Diagrams branch*
+Sequence Diagram
 <a href="SequenceDiagram"><img src="Lisa - SequenceDiagram.png" alt="Description"></a>
+Case Diagram
 <a href="CaseDigram"><img src="Lisa - CaseDigram.png" alt="Description"></a>
+Class Diagram
 <a href="ClassDiagram"><img src="Nelly-ClassDiagram.jpg" alt="Description"></a>
+State Diagram
 <a href="StateDiagram"><img src="Jessica - State Diagram.png" alt="Description"></a>
+
+Welcome Screen
+<a href="WelcomeScreen"><img src="WelcomeScreen" alt="Description"></a>
+
