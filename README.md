@@ -47,6 +47,7 @@ State Diagram
 
 
 WAlK THROUGH:
+
 Welcome Screen
 <a href="WelcomeScreen"><img src="WelcomeScreen.png" alt="Description"></a>
 
