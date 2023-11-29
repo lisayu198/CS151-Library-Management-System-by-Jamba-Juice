@@ -41,6 +41,7 @@ Nelly used her prior assignments at De Anza to reference for the File I/O requir
 Jessica used their HW 4 as a base for the library screen, as well as HW 5 for the JUnit tests.
 
 6. Diagrams [just the reference - hyperlinks not actual image] (update your diagrams if you have changed your design and previous feedback. Add a sequence diagram if it is missing)
+
 Sequence Diagram
 <a href="SequenceDiagram"><img src="Lisa - SequenceDiagram.png" alt="Description"></a>
 Case Diagram
